@@ -9,14 +9,14 @@ namespace Calculator
     /// <summary>
     /// Parser of mathematical expression string
     /// </summary>
-    public class Parser
+    public class Parser : IParser
     {
         /// <summary>
         /// Parse string to terms of mathematical expression
         /// </summary>
         /// <param name="expression">Input expression</param>
         /// <param name="mathOperations">Avaliable math operations</param>
-        /// <returns></returns>
+        /// <returns>Parsed mathematical expression</returns>
         public IEnumerable<object> Parse(string expression, MathOperation[] mathOperations)
         {
             var result = new List<object>();

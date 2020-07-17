@@ -6,7 +6,7 @@ namespace Calculator
     /// <summary>
     /// Processor for performing mathematical operations
     /// </summary>
-    public class MathProcessor
+    public class MathProcessor : IMathProcessor
     {
         /// <summary>
         /// Execute operations in a mathematical expression
