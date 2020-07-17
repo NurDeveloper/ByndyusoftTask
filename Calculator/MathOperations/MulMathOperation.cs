@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Calculator.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Calculator.MathOperations

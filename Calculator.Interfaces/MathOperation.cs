@@ -1,4 +1,4 @@
-﻿namespace Calculator.MathOperations
+﻿namespace Calculator.Interfaces
 {
     /// <summary>
     /// Mathematical operation abstract class

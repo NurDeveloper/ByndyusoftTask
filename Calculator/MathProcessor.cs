@@ -1,4 +1,4 @@
-﻿using Calculator.MathOperations;
+﻿using Calculator.Interfaces;
 using System.Collections.Generic;
 
 namespace Calculator

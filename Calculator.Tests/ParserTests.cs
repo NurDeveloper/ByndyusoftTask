@@ -1,4 +1,5 @@
-﻿using Calculator.MathOperations;
+﻿using Calculator.Interfaces;
+using Calculator.MathOperations;
 using Xunit;
 
 namespace Calculator.Tests
