@@ -5,5 +5,6 @@
     /// </summary>
     public abstract class MathOperation
     {
+        public abstract int Priority { get; }
     }
 }
