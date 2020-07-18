@@ -17,8 +17,9 @@ namespace Calculator
         /// </summary>
         /// <param name="expression">Input expression</param>
         /// <param name="mathOperations">Avaliable math operations</param>
-        /// <exception cref="ArgumentException"></exception>
         /// <returns>Parsed mathematical expression</returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="NullReferenceException"></exception>
         public IEnumerable<object> Parse(string expression, MathOperation[] mathOperations)
         {
             var result = new List<object>();

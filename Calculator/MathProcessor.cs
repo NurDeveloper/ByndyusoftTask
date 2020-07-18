@@ -1,4 +1,5 @@
-﻿using Calculator.Interfaces;
+﻿using System;
+using Calculator.Interfaces;
 using System.Collections.Generic;
 
 namespace Calculator
@@ -13,6 +14,9 @@ namespace Calculator
         /// </summary>
         /// <param name="expression">Mathematical expression</param>
         /// <returns>Execution result</returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="DivideByZeroException"></exception>
+        /// <exception cref="NullReferenceException"></exception>
         public double Process(IEnumerable<object> expression)
         {
             var stack = new Stack<double>();

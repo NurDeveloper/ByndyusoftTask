@@ -17,6 +17,7 @@ namespace Calculator
         /// <param name="infixNotation">Infix notation</param>
         /// <returns>Reverse polish notation</returns>
         /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="NullReferenceException"></exception>
         public IEnumerable<object> ConvertToReversePolishNotation(IEnumerable<object> infixNotation)
         {
             var stack = new Stack<MathOperation>();
