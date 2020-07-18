@@ -1,4 +1,5 @@
 ﻿using Calculator.MathOperations;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -20,8 +21,8 @@ namespace Calculator.Tests
                 2.00
             };
 
-            var _mathProcessor = new MathProcessor();
-            var result = _mathProcessor.Process(inputExpression);
+            var mathProcessor = new MathProcessor();
+            var result = mathProcessor.Process(inputExpression);
 
             Assert.Equal(2.00, result);
         }
@@ -36,8 +37,8 @@ namespace Calculator.Tests
                 new AddMathOperation()
             };
 
-            var _mathProcessor = new MathProcessor();
-            var result = _mathProcessor.Process(inputExpression);
+            var mathProcessor = new MathProcessor();
+            var result = mathProcessor.Process(inputExpression);
 
             Assert.Equal(5.75, result);
         }
@@ -52,8 +53,8 @@ namespace Calculator.Tests
                 new SubMathOperation()
             };
 
-            var _mathProcessor = new MathProcessor();
-            var result = _mathProcessor.Process(inputExpression);
+            var mathProcessor = new MathProcessor();
+            var result = mathProcessor.Process(inputExpression);
 
             Assert.Equal(4.00, result);
         }
@@ -68,8 +69,8 @@ namespace Calculator.Tests
                 new MulMathOperation()
             };
 
-            var _mathProcessor = new MathProcessor();
-            var result = _mathProcessor.Process(inputExpression);
+            var mathProcessor = new MathProcessor();
+            var result = mathProcessor.Process(inputExpression);
 
             Assert.Equal(12.00, result);
         }
@@ -84,16 +85,15 @@ namespace Calculator.Tests
                 new DivMathOperation()
             };
 
-            var _mathProcessor = new MathProcessor();
-            var result = _mathProcessor.Process(inputExpression);
+            var mathProcessor = new MathProcessor();
+            var result = mathProcessor.Process(inputExpression);
 
             Assert.Equal(3.00, result);
         }
 
         [Fact]
         public void MathProcessor_returns_result_of_several_math_operation()
-        {
-
+        { 
             var inputExpression = new List<object>()
             {
                 2.00,
@@ -103,8 +103,8 @@ namespace Calculator.Tests
                 new AddMathOperation()
             };
 
-            var _mathProcessor = new MathProcessor();
-            var result = _mathProcessor.Process(inputExpression);
+            var mathProcessor = new MathProcessor();
+            var result = mathProcessor.Process(inputExpression);
 
             Assert.Equal(17.00, result);
         }
