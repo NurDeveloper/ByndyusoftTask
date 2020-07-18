@@ -1,4 +1,5 @@
 ﻿using Calculator.Interfaces;
+using System;
 
 namespace Calculator
 {
@@ -33,13 +34,22 @@ namespace Calculator
         /// </summary>
         /// <param name="expression">Mathematical expression</param>
         /// <returns>The result of the calculation</returns>
-        public double Calculate(string expression)
+        public string Calculate(string expression)
         {
-            var parsedExpression = _parser.Parse(expression, _operations);
+            try
+            {
+                var parsedExpression = _parser.Parse(expression, _operations);
 
-            var convertedExpression = _notationConverter.ConvertToReversePolishNotation(parsedExpression);
+                var convertedExpression = _notationConverter.ConvertToReversePolishNotation(parsedExpression);
 
-            return _mathProcessor.Process(convertedExpression);
+                var result = _mathProcessor.Process(convertedExpression);
+
+                return result.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
     }
 }

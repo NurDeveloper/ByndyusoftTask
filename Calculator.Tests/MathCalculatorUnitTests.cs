@@ -1,6 +1,7 @@
 ﻿using Calculator.Interfaces;
 using Calculator.MathOperations;
 using Moq;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -36,7 +37,7 @@ namespace Calculator.Tests
         }
 
         [Fact]
-        public void CalculatorCalculates()
+        public void Calculator_calculates()
         {
             const string inputExpression = "1+2*3";
 
@@ -71,6 +72,44 @@ namespace Calculator.Tests
             _mockMathProcessor
                 .Setup(mp => mp.Process(convertedExpression))
                 .Returns(expectedResult);
+
+            var actualResult = _calculator.Calculate(inputExpression);
+
+            Assert.Equal("7", actualResult);
+        }
+
+        [Fact]
+        public void Calculator_returns_error_message()
+        {
+            const string inputExpression = "3/0";
+
+            var parsedExpression = new List<object>
+            {
+                3.00,
+                new DivMathOperation(),
+                0.00
+            };
+
+            var convertedExpression = new List<object>
+            {
+                3.00,
+                0.00,
+                new DivMathOperation()
+            };
+
+            const string expectedResult = "You cannot divide by zero.";
+
+            _mockParser
+                .Setup(p => p.Parse(inputExpression, _mathOperations))
+                .Returns(parsedExpression);
+
+            _mockNotationConverter
+                .Setup(nc => nc.ConvertToReversePolishNotation(parsedExpression))
+                .Returns(convertedExpression);
+
+            _mockMathProcessor
+                .Setup(mp => mp.Process(convertedExpression))
+                .Throws(new DivideByZeroException(expectedResult));
 
             var actualResult = _calculator.Calculate(inputExpression);
 
