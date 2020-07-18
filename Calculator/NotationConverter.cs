@@ -1,5 +1,6 @@
 ﻿using Calculator.Interfaces;
 using Calculator.MathOperations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,6 +16,7 @@ namespace Calculator
         /// </summary>
         /// <param name="infixNotation">Infix notation</param>
         /// <returns>Reverse polish notation</returns>
+        /// <exception cref="ArgumentException"></exception>
         public IEnumerable<object> ConvertToReversePolishNotation(IEnumerable<object> infixNotation)
         {
             var stack = new Stack<MathOperation>();
@@ -38,9 +40,14 @@ namespace Calculator
 
                 if (item is RightBracketMathOperation rightBracketMathOperation)
                 {
-                    while (!(stack.Peek() is LeftBracketMathOperation))
+                    while (stack.Count != 0 && !(stack.Peek() is LeftBracketMathOperation))
                     {
                         result.Add(stack.Pop());
+                    }
+
+                    if (stack.Count == 0)
+                    {
+                        throw new ArgumentException("Invalid mathematical expression or non-infix notation.");
                     }
 
                     stack.Pop();
@@ -60,7 +67,15 @@ namespace Calculator
 
             while (stack.Count() != 0)
             {
-                result.Add(stack.Pop());
+                var peek = stack.Peek();
+                if ((peek is MathOperation) && !(stack.Peek() is LeftBracketMathOperation))
+                {
+                    result.Add(stack.Pop());
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid mathematical expression or non-infix notation.");
+                }
             }
 
             return result;

@@ -1,4 +1,5 @@
 ﻿using Calculator.MathOperations;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -87,6 +88,24 @@ namespace Calculator.Tests
                 item => Assert.Equal(3.00, item),
                 item => Assert.Equal(2.00, item),
                 item => Assert.Equal("+", item.ToString()));
+        }
+
+        [Fact]
+        public void NotationConverter_throws_custom_exception_for_wrong_brackets()
+        {
+            var notationConverter = new NotationConverter();
+            var inputValue = new List<object>()
+            {
+                new RightBracketMathOperation(),
+                3.00,
+                new AddMathOperation(),
+                2.00
+            };
+
+            Action action = () => notationConverter.ConvertToReversePolishNotation(inputValue);
+
+            var exception = Assert.Throws<ArgumentException>(action);
+            Assert.Equal("Invalid mathematical expression or non-infix notation.", exception.Message);
         }
     }
 }
