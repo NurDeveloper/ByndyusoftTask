@@ -1,5 +1,6 @@
 ﻿using Calculator.Interfaces;
 using Calculator.MathOperations;
+using System;
 using Xunit;
 
 namespace Calculator.Tests
@@ -85,6 +86,18 @@ namespace Calculator.Tests
                 item => Assert.Equal("+", item.ToString()),
                 item => Assert.Equal(5.00, item),
                 item => Assert.Equal(")", item.ToString()));
+        }
+
+        [Fact]
+        public void Parser_throws_custom_exception_for_wrong_input_value()
+        {
+            var parser = new Parser();
+            string inputValue = "5+b";
+
+            Action action = () => parser.Parse(inputValue, _mathOperations);
+
+            var exception = Assert.Throws<ArgumentException>(action);
+            Assert.Equal("Invalid mathematical expression or unsupported operation for parsing.", exception.Message);
         }
     }
 }

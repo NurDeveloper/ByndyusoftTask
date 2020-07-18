@@ -1,4 +1,5 @@
 ﻿using Calculator.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -16,12 +17,11 @@ namespace Calculator
         /// </summary>
         /// <param name="expression">Input expression</param>
         /// <param name="mathOperations">Avaliable math operations</param>
+        /// <exception cref="ArgumentException"></exception>
         /// <returns>Parsed mathematical expression</returns>
         public IEnumerable<object> Parse(string expression, MathOperation[] mathOperations)
         {
             var result = new List<object>();
-
-            double value = 0;
 
             var valueBuilder = new StringBuilder();
 
@@ -29,7 +29,7 @@ namespace Calculator
             {
                 if (TryParseMathOperation(expression[i].ToString(), mathOperations, out MathOperation mathOperation))
                 {
-                    ParseValue(result, valueBuilder, out value);
+                    ParseValue(result, valueBuilder);
 
                     result.Add(mathOperation);
 
@@ -39,23 +39,29 @@ namespace Calculator
                 valueBuilder.Append(expression[i]);
             }
 
-            if (valueBuilder.Length != 0)
-            {
-                ParseValue(result, valueBuilder, out value);
-            }
+            ParseValue(result, valueBuilder);
 
             return result;
         }
 
-        private static void ParseValue(List<object> mathExpression, StringBuilder valueBuilder, out double value)
+        private static void ParseValue(List<object> mathExpression, StringBuilder valueBuilder)
         {
+            if (valueBuilder.Length == 0)
+            {
+                return;
+            }
+
             var valueAsString = valueBuilder.ToString();
 
-            if (double.TryParse(valueAsString, NumberStyles.Any, CultureInfo.InvariantCulture, out value))
+            if (double.TryParse(valueAsString, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
             {
                 mathExpression.Add(value);
 
                 valueBuilder.Clear();
+            }
+            else
+            {
+                throw new ArgumentException("Invalid mathematical expression or unsupported operation for parsing.");
             }
         }
 
