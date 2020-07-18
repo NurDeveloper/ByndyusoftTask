@@ -108,5 +108,22 @@ namespace Calculator.Tests
 
             Assert.Equal(17.00, result);
         }
+
+        [Fact]
+        public void MathProcessor_returns_divide_by_zero_exception()
+        {
+            var inputExpression = new List<object>()
+            {
+                3.00,
+                0.00,
+                new DivMathOperation(),
+            };
+
+            var mathProcessor = new MathProcessor();
+            Action action = () => mathProcessor.Process(inputExpression);
+
+            var exception = Assert.Throws<DivideByZeroException>(action);
+            Assert.Equal("You cannot divide by zero.", exception.Message);
+        }
     }
 }
