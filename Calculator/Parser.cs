@@ -52,7 +52,7 @@ namespace Calculator
                 return;
             }
 
-            var valueAsString = valueBuilder.ToString();
+            var valueAsString = valueBuilder.ToString().Replace(',', '.');
 
             if (double.TryParse(valueAsString, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
             {

@@ -99,5 +99,16 @@ namespace Calculator.Tests
             var exception = Assert.Throws<ArgumentException>(action);
             Assert.Equal("Invalid mathematical expression or unsupported operation for parsing.", exception.Message);
         }
+
+        [Fact]
+        public void Parser_correct_parses_digit_with_comma()
+        {
+            var parser = new Parser();
+            string inputValue = "23,5";
+
+            var result = parser.Parse(inputValue, _mathOperations);
+
+            Assert.Collection(result, item => Assert.Equal(23.50, item));
+        }
     }
 }
