@@ -24,6 +24,10 @@ namespace Calculator.MathOperations
 
                 stack.Push(result);
             }
+            else
+            {
+                throw new ArgumentException("Invalid mathematical expression.");
+            }
         }
 
         public override string ToString()
