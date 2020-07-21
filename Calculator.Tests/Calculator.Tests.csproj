@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Calculator.Domain\Calculator.Domain.csproj" />
     <ProjectReference Include="..\Calculator.Interfaces\Calculator.Interfaces.csproj" />
     <ProjectReference Include="..\Calculator\Calculator.csproj" />
   </ItemGroup>
