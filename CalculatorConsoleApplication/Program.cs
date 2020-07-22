@@ -19,11 +19,11 @@ namespace CalculatorConsoleApplication
                 new RightBracketMathOperation()
             };
 
-            var parser = new ParserSupportingCalculatorDomain();
-            var notationConverter = new NotationConverterSupportingCalculatorDomain();
-            var mathProcessor = new MathProcessorSupportingCalculatorDomain();
+            var parser = new Parser();
+            var notationConverter = new NotationConverter();
+            var mathProcessor = new MathProcessor();
 
-            var calculator = new MathCalculatorSupportingCalculatorDomain(parser, notationConverter, mathProcessor, mathOperations);
+            var calculator = new MathCalculator(parser, notationConverter, mathProcessor, mathOperations);
 
             Console.WriteLine("Calculator");
             Console.WriteLine("To complete the work, type exit.");
