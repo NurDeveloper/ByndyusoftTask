@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Calculator.Interfaces\Calculator.Interfaces.csproj" />
     <ProjectReference Include="..\Calculator\Calculator.csproj" />
   </ItemGroup>
 

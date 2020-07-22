@@ -10,8 +10,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Interfaces", "Calculator.Interfaces\Calculator.Interfaces.csproj", "{0677CD42-0011-4858-A88B-9338C29ABF5F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculatorConsoleApplication", "CalculatorConsoleApplication\CalculatorConsoleApplication.csproj", "{26784BED-1C14-41B5-908C-16309E69E71B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0677CD42-0011-4858-A88B-9338C29ABF5F} = {0677CD42-0011-4858-A88B-9338C29ABF5F}
+		{8497E363-1277-4830-A64F-28BD06537385} = {8497E363-1277-4830-A64F-28BD06537385}
+		{184A60FC-8948-4302-BFAB-FBEF12FD231D} = {184A60FC-8948-4302-BFAB-FBEF12FD231D}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.Domain", "Calculator.Domain\Calculator.Domain.csproj", "{184A60FC-8948-4302-BFAB-FBEF12FD231D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calculator.Domain", "Calculator.Domain\Calculator.Domain.csproj", "{184A60FC-8948-4302-BFAB-FBEF12FD231D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
