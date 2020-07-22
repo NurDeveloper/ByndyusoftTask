@@ -1,4 +1,5 @@
-﻿using Calculator.Interfaces;
+﻿using Calculator.Domain.ExpressionUnits;
+using Calculator.Interfaces;
 using Calculator.MathOperations;
 using Moq;
 using System;
@@ -109,6 +110,116 @@ namespace Calculator.Tests
 
             _mockMathProcessor
                 .Setup(mp => mp.Process(convertedExpression))
+                .Throws(new DivideByZeroException(expectedResult));
+
+            var actualResult = _calculator.Calculate(inputExpression);
+
+            Assert.Equal(expectedResult, actualResult);
+        }
+    }
+
+    public class MathCalculatorUnitSupportingCalculatorDomainTests
+    {
+        private readonly MathCalculatorSupportingCalculatorDomain _calculator;
+
+        private Mock<IParserSupportingCalculatorDomain> _mockParser;
+        private Mock<INotationConverterSupportingCalculatorDomain> _mockNotationConverter;
+        private Mock<IMathProcessorSupportingCalculatorDomain> _mockMathProcessor;
+
+        private readonly MathOperation[] _mathOperations;
+
+        public MathCalculatorUnitSupportingCalculatorDomainTests()
+        {
+            _mathOperations = new MathOperation[]
+            {
+                new AddMathOperation(),
+                new SubMathOperation(),
+                new MulMathOperation(),
+                new DivMathOperation(),
+                new LeftBracketMathOperation(),
+                new RightBracketMathOperation()
+            };
+
+            _mockParser = new Mock<IParserSupportingCalculatorDomain>();
+            _mockNotationConverter = new Mock<INotationConverterSupportingCalculatorDomain>();
+            _mockMathProcessor = new Mock<IMathProcessorSupportingCalculatorDomain>();
+
+            _calculator = new MathCalculatorSupportingCalculatorDomain(_mockParser.Object, _mockNotationConverter.Object, _mockMathProcessor.Object, _mathOperations);
+        }
+
+        [Fact]
+        public void Calculator_calculates()
+        {
+            const string inputExpression = "1+2*3";
+
+            var parsedExpression = new List<ExpressionUnit>
+            {
+                new NumberExpressionUnit("1.00"),
+                new OperationExpressionUnit("+"),
+                new NumberExpressionUnit("2.00"),
+                new OperationExpressionUnit("*"),
+                new NumberExpressionUnit("3.00")
+            };
+
+            var convertedExpression = new List<ExpressionUnit>
+            {
+                new NumberExpressionUnit("1.00"),
+                new NumberExpressionUnit("2.00"),
+                new NumberExpressionUnit("3.00"),
+                new OperationExpressionUnit("*"),
+                new OperationExpressionUnit("+")
+            };
+
+            const double expectedResult = 7;
+
+            _mockParser
+                .Setup(p => p.Parse(inputExpression, _mathOperations))
+                .Returns(parsedExpression);
+
+            _mockNotationConverter
+                .Setup(nc => nc.ConvertToReversePolishNotation(parsedExpression, _mathOperations))
+                .Returns(convertedExpression);
+
+            _mockMathProcessor
+                .Setup(mp => mp.Process(convertedExpression, _mathOperations))
+                .Returns(expectedResult);
+
+            var actualResult = _calculator.Calculate(inputExpression);
+
+            Assert.Equal("7", actualResult);
+        }
+
+        [Fact]
+        public void Calculator_returns_error_message()
+        {
+            const string inputExpression = "3/0";
+
+            var parsedExpression = new List<ExpressionUnit>
+            {
+                new NumberExpressionUnit("3.00"),
+                new OperationExpressionUnit("/"),
+                new NumberExpressionUnit("0.00"),
+            };
+
+            var convertedExpression = new List<ExpressionUnit>
+            {
+                new NumberExpressionUnit("3.00"),
+                new NumberExpressionUnit("0.00"),
+                new OperationExpressionUnit("/"),
+            };
+
+            const string expectedResult = "You cannot divide by zero.";
+
+            _mockParser
+                .Setup(p => p.Parse(inputExpression, _mathOperations))
+                .Returns(parsedExpression);
+
+            _mockNotationConverter
+                .Setup(nc => nc.ConvertToReversePolishNotation(parsedExpression, _mathOperations))
+                .Returns(convertedExpression);
+
+            _mockMathProcessor
+                .Setup(mp => mp.Process(convertedExpression, _mathOperations))
                 .Throws(new DivideByZeroException(expectedResult));
 
             var actualResult = _calculator.Calculate(inputExpression);
