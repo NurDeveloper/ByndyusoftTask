@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Calculator.Domain.ExpressionUnits;
+using System.Collections.Generic;
 
 namespace Calculator.Interfaces
 {
@@ -14,5 +15,19 @@ namespace Calculator.Interfaces
         /// <param name="mathOperations">Avaliable math operations</param>
         /// <returns>Parsed mathematical expression</returns>
         IEnumerable<object> Parse(string expression, MathOperation[] mathOperations);
+    }
+
+    /// <summary>
+    /// Parser of mathematical expression string
+    /// </summary>
+    public interface IParserSupportingCalculatorDomain
+    {
+        /// <summary>
+        /// Parse string to terms of mathematical expression
+        /// </summary>
+        /// <param name="expression">Input expression</param>
+        /// <param name="mathOperations">Avaliable math operations</param>
+        /// <returns>Parsed mathematical expression</returns>
+        IEnumerable<ExpressionUnit> Parse(string expression, MathOperation[] mathOperations);
     }
 }

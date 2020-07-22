@@ -87,7 +87,7 @@ namespace Calculator
     /// <summary>
     /// Converter for different mathematical notation
     /// </summary>
-    public class NotationConverterSupportingCalculatorDomain
+    public class NotationConverterSupportingCalculatorDomain : INotationConverterSupportingCalculatorDomain
     {
         /// <summary>
         /// Convert infix notation to reverse polish notation

@@ -79,7 +79,7 @@ namespace Calculator
     /// <summary>
     /// Parser of mathematical expression string
     /// </summary>
-    public class ParserSupportingCalculatorDomain
+    public class ParserSupportingCalculatorDomain : IParserSupportingCalculatorDomain
     {
         /// <summary>
         /// Parse string to terms of mathematical expression

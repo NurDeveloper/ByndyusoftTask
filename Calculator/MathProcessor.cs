@@ -45,7 +45,7 @@ namespace Calculator
     /// <summary>
     /// Processor for performing mathematical operations
     /// </summary>
-    public class MathProcessorSupportingCalculatorDomain
+    public class MathProcessorSupportingCalculatorDomain : IMathProcessorSupportingCalculatorDomain
     {
         /// <summary>
         /// Execute operations in a mathematical expression
