@@ -60,8 +60,19 @@ namespace Calculator
 
                 MathOperation operation = CreateOperationByKeyword(item, mathOperations);
 
-                while (stack.Count() != 0 && CreateOperationByKeyword(stack.Peek(), mathOperations).Priority > operation.Priority)
+                while (stack.Count() != 0)
                 {
+                    var peek = stack.Peek();
+                    if (peek.Type != Domain.Enums.ExpressionUnitType.Operation)
+                    {
+                        break;
+                    }
+
+                    if (CreateOperationByKeyword(peek, mathOperations).Priority <= operation.Priority)
+                    {
+                        break;
+                    }
+
                     result.Add(stack.Pop());
                 }
 
@@ -71,7 +82,7 @@ namespace Calculator
             while (stack.Count() != 0)
             {
                 var peek = stack.Peek();
-                if ((peek.Type == Domain.Enums.ExpressionUnitType.Operation) && !(stack.Peek().Type == Domain.Enums.ExpressionUnitType.LeftBracket))
+                if ((peek.Type == Domain.Enums.ExpressionUnitType.Operation) && !(peek.Type == Domain.Enums.ExpressionUnitType.LeftBracket))
                 {
                     result.Add(stack.Pop());
                 }

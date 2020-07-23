@@ -14,8 +14,6 @@ namespace Calculator.Tests
                 new SubMathOperation(),
                 new MulMathOperation(),
                 new DivMathOperation(),
-                new LeftBracketMathOperation(),
-                new RightBracketMathOperation()
             };
 
         [Fact]

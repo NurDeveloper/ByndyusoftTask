@@ -14,8 +14,6 @@ namespace CalculatorConsoleApplication
                 new SubMathOperation(),
                 new MulMathOperation(),
                 new DivMathOperation(),
-                new LeftBracketMathOperation(),
-                new RightBracketMathOperation()
             };
 
             var parser = new Parser();

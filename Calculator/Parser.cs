@@ -74,26 +74,30 @@ namespace Calculator
 
             if (mathOperation != null)
             {
-                if (mathOperation is LeftBracketMathOperation)
-                {
-                    expressionUnit = new LeftBracketExpressionUnit();
-
-                    return true;
-                }
-
-                if (mathOperation is RightBracketMathOperation)
-                {
-                    expressionUnit = new RightBracketExpressionUnit();
-
-                    return true;
-                }
-
                 expressionUnit = new OperationExpressionUnit(mathOperation.ToString());
 
                 return true;
             }
 
-            expressionUnit = null;
+            var leftBracketExpressionUnit = new LeftBracketExpressionUnit();
+
+            if (expressionItem == leftBracketExpressionUnit.Value)
+            {
+                expressionUnit = leftBracketExpressionUnit;
+
+                return true;
+            }
+
+            var rightBracketExpressionUnit = new RightBracketExpressionUnit();
+
+            if (expressionItem == rightBracketExpressionUnit.Value)
+            {
+                expressionUnit = rightBracketExpressionUnit;
+
+                return true;
+            }
+
+            expressionUnit = default(ExpressionUnit);
 
             return false;
         }

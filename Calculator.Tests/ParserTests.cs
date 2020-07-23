@@ -13,8 +13,6 @@ namespace Calculator.Tests
                 new SubMathOperation(),
                 new MulMathOperation(),
                 new DivMathOperation(),
-                new LeftBracketMathOperation(),
-                new RightBracketMathOperation()
             };
 
         private static void AssertExpressionUnitEqual(ExpressionUnit expectedItem, ExpressionUnit item)
