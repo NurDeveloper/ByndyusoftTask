@@ -45,7 +45,7 @@ namespace Calculator
             return stack.Peek();
         }
 
-        private static IOperation CreateOperationByKeyword(ExpressionUnit item, MathOperation[] mathOperations)
+        private static MathOperation CreateOperationByKeyword(ExpressionUnit item, MathOperation[] mathOperations)
         {
             var operation = mathOperations.FirstOrDefault(m => m.ToString() == item.Value);
 
@@ -54,7 +54,7 @@ namespace Calculator
                 throw new ArgumentException("Invalid mathematical expression or unsupported operation.");
             }
 
-            return operation as IOperation;
+            return operation;
         }
     }
 }

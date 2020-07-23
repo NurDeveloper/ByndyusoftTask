@@ -4,11 +4,14 @@ using System.Linq;
 
 namespace Calculator.Domain.MathOperations
 {
-    public class MulMathOperation : MathOperation, IOperation
+    /// <summary>
+    /// Multiplication operation
+    /// </summary>
+    public class MulMathOperation : MathOperation
     {
         public override int Priority => 2;
 
-        public void Operate(Stack<double> stack)
+        public override void Operate(Stack<double> stack)
         {
             if (stack != null && stack.Count() >= 2)
             {
