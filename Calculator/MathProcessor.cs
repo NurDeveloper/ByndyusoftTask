@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Calculator.Domain.ExpressionUnits;
 using System.Globalization;
 using System.Linq;
+using Calculator.Domain.MathOperations;
 
 namespace Calculator
 {

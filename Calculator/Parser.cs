@@ -1,6 +1,6 @@
 ﻿using Calculator.Domain.ExpressionUnits;
+using Calculator.Domain.MathOperations;
 using Calculator.Interfaces;
-using Calculator.MathOperations;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

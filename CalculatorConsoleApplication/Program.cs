@@ -1,6 +1,5 @@
 ﻿using Calculator;
-using Calculator.Interfaces;
-using Calculator.MathOperations;
+using Calculator.Domain.MathOperations;
 using System;
 
 namespace CalculatorConsoleApplication

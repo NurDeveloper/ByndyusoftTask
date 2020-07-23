@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Calculator.Interfaces
+namespace Calculator.Domain.MathOperations
 {
     /// <summary>
     /// Operation execution interface

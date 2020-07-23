@@ -1,4 +1,5 @@
-﻿using Calculator.Interfaces;
+﻿using Calculator.Domain.MathOperations;
+using Calculator.Interfaces;
 using System;
 
 namespace Calculator

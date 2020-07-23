@@ -1,6 +1,4 @@
-﻿using Calculator.Interfaces;
-
-namespace Calculator.MathOperations
+﻿namespace Calculator.Domain.MathOperations
 {
     public class RightBracketMathOperation : MathOperation
     {

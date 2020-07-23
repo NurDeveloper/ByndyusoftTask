@@ -1,9 +1,8 @@
-﻿using Calculator.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Calculator.MathOperations
+namespace Calculator.Domain.MathOperations
 {
     public class MulMathOperation : MathOperation, IOperation
     {

@@ -1,4 +1,5 @@
 ﻿using Calculator.Domain.ExpressionUnits;
+using Calculator.Domain.MathOperations;
 using Calculator.Interfaces;
 using System;
 using System.Collections.Generic;
