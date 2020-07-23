@@ -1,5 +1,4 @@
 ﻿using Calculator;
-using Calculator.Domain.MathOperations;
 using System;
 
 namespace CalculatorConsoleApplication
@@ -8,19 +7,12 @@ namespace CalculatorConsoleApplication
     {
         static void Main(string[] args)
         {
-            var mathOperations = new MathOperation[]
-            {
-                new AddMathOperation(),
-                new SubMathOperation(),
-                new MulMathOperation(),
-                new DivMathOperation(),
-            };
-
+            var mathOperationsContainer = new MathOperationsContainer();
             var parser = new Parser();
             var notationConverter = new NotationConverter();
             var mathProcessor = new MathProcessor();
 
-            var calculator = new MathCalculator(parser, notationConverter, mathProcessor, mathOperations);
+            var calculator = new MathCalculator(parser, notationConverter, mathProcessor, mathOperationsContainer);
 
             Console.WriteLine("Calculator");
             Console.WriteLine("To complete the work, type exit.");

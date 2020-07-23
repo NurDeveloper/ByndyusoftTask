@@ -1,5 +1,5 @@
 ﻿using Calculator.Domain.ExpressionUnits;
-using Calculator.Domain.MathOperations;
+using Calculator.Interfaces;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -8,13 +8,7 @@ namespace Calculator.Tests
 {
     public class MathProcessorUnitTests
     {
-        private readonly MathOperation[] _mathOperations = new MathOperation[]
-            {
-                new AddMathOperation(),
-                new SubMathOperation(),
-                new MulMathOperation(),
-                new DivMathOperation(),
-            };
+        private readonly IMathOperationsContainer _mathOperationsContainer = new MathOperationsContainer();
 
         [Fact]
         public void MathProcessor_should_be()
@@ -31,7 +25,7 @@ namespace Calculator.Tests
                 new NumberExpressionUnit("2.00")
             };
 
-            var result = mathProcessor.Process(inputExpression, _mathOperations);
+            var result = mathProcessor.Process(inputExpression, _mathOperationsContainer);
 
             Assert.Equal(2.00, result);
         }
@@ -47,7 +41,7 @@ namespace Calculator.Tests
                 new OperationExpressionUnit("+")
             };
 
-            var result = mathProcessor.Process(inputExpression, _mathOperations);
+            var result = mathProcessor.Process(inputExpression, _mathOperationsContainer);
 
             Assert.Equal(5.75, result);
         }
@@ -63,7 +57,7 @@ namespace Calculator.Tests
                 new OperationExpressionUnit("-")
             };
 
-            var result = mathProcessor.Process(inputExpression, _mathOperations);
+            var result = mathProcessor.Process(inputExpression, _mathOperationsContainer);
 
             Assert.Equal(4.00, result);
         }
@@ -79,7 +73,7 @@ namespace Calculator.Tests
                 new OperationExpressionUnit("*")
             };
 
-            var result = mathProcessor.Process(inputExpression, _mathOperations);
+            var result = mathProcessor.Process(inputExpression, _mathOperationsContainer);
 
             Assert.Equal(12.00, result);
         }
@@ -95,7 +89,7 @@ namespace Calculator.Tests
                 new OperationExpressionUnit("/")
             };
 
-            var result = mathProcessor.Process(inputExpression, _mathOperations);
+            var result = mathProcessor.Process(inputExpression, _mathOperationsContainer);
 
             Assert.Equal(3.00, result);
         }
@@ -113,7 +107,7 @@ namespace Calculator.Tests
                 new OperationExpressionUnit("+")
             };
 
-            var result = mathProcessor.Process(inputExpression, _mathOperations);
+            var result = mathProcessor.Process(inputExpression, _mathOperationsContainer);
 
             Assert.Equal(17.00, result);
         }
@@ -129,7 +123,7 @@ namespace Calculator.Tests
                 new OperationExpressionUnit("/")
             };
 
-            Action action = () => mathProcessor.Process(inputExpression, _mathOperations);
+            Action action = () => mathProcessor.Process(inputExpression, _mathOperationsContainer);
 
             var exception = Assert.Throws<DivideByZeroException>(action);
             Assert.Equal("You cannot divide by zero.", exception.Message);
@@ -147,7 +141,7 @@ namespace Calculator.Tests
                 new OperationExpressionUnit("+")
             };
 
-            Action action = () => mathProcessor.Process(inputExpression, _mathOperations);
+            Action action = () => mathProcessor.Process(inputExpression, _mathOperationsContainer);
 
             var exception = Assert.Throws<ArgumentException>(action);
             Assert.Equal("Invalid mathematical expression.", exception.Message);
@@ -164,7 +158,7 @@ namespace Calculator.Tests
                 new OperationExpressionUnit("$")
             };
 
-            Action action = () => mathProcessor.Process(inputExpression, _mathOperations);
+            Action action = () => mathProcessor.Process(inputExpression, _mathOperationsContainer);
 
             var exception = Assert.Throws<ArgumentException>(action);
             Assert.Equal("Invalid mathematical expression or unsupported operation.", exception.Message);

@@ -16,11 +16,11 @@ namespace Calculator
         /// Convert infix notation to reverse polish notation
         /// </summary>
         /// <param name="infixNotation">Infix notation</param>
-        /// <param name="mathOperations">Avaliable math operations</param>
+        /// <param name="mathOperationsContainer">Avaliable math operations</param>
         /// <returns>Reverse polish notation</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="NullReferenceException"></exception>
-        public IEnumerable<ExpressionUnit> ConvertToReversePolishNotation(IEnumerable<ExpressionUnit> infixNotation, MathOperation[] mathOperations)
+        public IEnumerable<ExpressionUnit> ConvertToReversePolishNotation(IEnumerable<ExpressionUnit> infixNotation, IMathOperationsContainer mathOperationsContainer)
         {
             var stack = new Stack<ExpressionUnit>();
             var result = new List<ExpressionUnit>();
@@ -58,7 +58,7 @@ namespace Calculator
                     continue;
                 }
 
-                MathOperation operation = CreateOperationByKeyword(item, mathOperations);
+                var operation = CreateOperationByKeyword(item, mathOperationsContainer);
 
                 while (stack.Count() != 0)
                 {
@@ -68,7 +68,7 @@ namespace Calculator
                         break;
                     }
 
-                    if (CreateOperationByKeyword(peek, mathOperations).Priority <= operation.Priority)
+                    if (CreateOperationByKeyword(peek, mathOperationsContainer).Priority <= operation.Priority)
                     {
                         break;
                     }
@@ -95,9 +95,9 @@ namespace Calculator
             return result;
         }
 
-        private static MathOperation CreateOperationByKeyword(ExpressionUnit item, MathOperation[] mathOperations)
+        private static MathOperation CreateOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
         {
-            var operation = mathOperations.FirstOrDefault(m => m.ToString() == item.Value);
+            var operation = mathOperationsContainer.GetOperationOrDefault(item.Value);
 
             if (operation == null)
             {

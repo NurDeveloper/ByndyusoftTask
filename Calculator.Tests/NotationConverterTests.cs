@@ -1,5 +1,5 @@
 ﻿using Calculator.Domain.ExpressionUnits;
-using Calculator.Domain.MathOperations;
+using Calculator.Interfaces;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -8,13 +8,7 @@ namespace Calculator.Tests
 {
     public class NotationConverterTests
     {
-        private readonly MathOperation[] _mathOperations = new MathOperation[]
-            {
-                new AddMathOperation(),
-                new SubMathOperation(),
-                new MulMathOperation(),
-                new DivMathOperation(),
-            };
+        private readonly IMathOperationsContainer _mathOperationsContainer = new MathOperationsContainer();
 
         private static void AssertExpressionUnitEqual(ExpressionUnit expectedItem, ExpressionUnit item)
         {
@@ -37,7 +31,7 @@ namespace Calculator.Tests
                 new NumberExpressionUnit("2.00")
             };
 
-            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperations);
+            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             var expectedItem = new NumberExpressionUnit("2.00");
             Assert.Collection(result, item => AssertExpressionUnitEqual(expectedItem, item));
@@ -54,7 +48,7 @@ namespace Calculator.Tests
                 new NumberExpressionUnit("2.00")
             };
 
-            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperations);
+            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
                 item => AssertExpressionUnitEqual(new NumberExpressionUnit("3.00"), item),
@@ -75,7 +69,7 @@ namespace Calculator.Tests
                 new NumberExpressionUnit("3.00")
             };
 
-            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperations);
+            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
                 item => AssertExpressionUnitEqual(new NumberExpressionUnit("4.00"), item),
@@ -98,7 +92,7 @@ namespace Calculator.Tests
                 new RightBracketExpressionUnit()
             };
 
-            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperations);
+            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
                 item => AssertExpressionUnitEqual(new NumberExpressionUnit("3.00"), item),
@@ -118,7 +112,7 @@ namespace Calculator.Tests
                 new NumberExpressionUnit("2.00")
              };
 
-            Action action = () => notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperations);
+            Action action = () => notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             var exception = Assert.Throws<ArgumentException>(action);
             Assert.Equal("Invalid mathematical expression or non-infix notation.", exception.Message);
@@ -135,7 +129,7 @@ namespace Calculator.Tests
                 new NumberExpressionUnit("2.00")
              };
 
-            Action action = () => notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperations);
+            Action action = () => notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             var exception = Assert.Throws<ArgumentException>(action);
             Assert.Equal("Invalid mathematical expression or unsupported operation.", exception.Message);

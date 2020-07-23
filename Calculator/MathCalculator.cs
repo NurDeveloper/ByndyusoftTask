@@ -1,5 +1,4 @@
-﻿using Calculator.Domain.MathOperations;
-using Calculator.Interfaces;
+﻿using Calculator.Interfaces;
 using System;
 
 namespace Calculator
@@ -9,8 +8,7 @@ namespace Calculator
     /// </summary>
     public class MathCalculator
     {
-        private readonly MathOperation[] _operations;
-
+        private readonly IMathOperationsContainer _mathOperationsContainer;
         private readonly IParser _parser;
         private readonly INotationConverter _notationConverter;
         private readonly IMathProcessor _mathProcessor;
@@ -21,13 +19,13 @@ namespace Calculator
         /// <param name="parser">Parser of mathematical expression string</param>
         /// <param name="notationConverter">Converter for different mathematical notation</param>
         /// <param name="mathProcessor">Processor for performing mathematical operations</param>
-        /// <param name="operations">Mathematical operations</param>
-        public MathCalculator(IParser parser, INotationConverter notationConverter, IMathProcessor mathProcessor, MathOperation[] operations)
+        /// <param name="mathOperationsContainer">Mathematical operations</param>
+        public MathCalculator(IParser parser, INotationConverter notationConverter, IMathProcessor mathProcessor, IMathOperationsContainer mathOperationsContainer)
         {
             _parser = parser;
             _notationConverter = notationConverter;
             _mathProcessor = mathProcessor;
-            _operations = operations;
+            _mathOperationsContainer = mathOperationsContainer;
         }
 
         /// <summary>
@@ -39,11 +37,11 @@ namespace Calculator
         {
             try
             {
-                var parsedExpression = _parser.Parse(expression, _operations);
+                var parsedExpression = _parser.Parse(expression, _mathOperationsContainer);
 
-                var convertedExpression = _notationConverter.ConvertToReversePolishNotation(parsedExpression, _operations);
+                var convertedExpression = _notationConverter.ConvertToReversePolishNotation(parsedExpression, _mathOperationsContainer);
 
-                var result = _mathProcessor.Process(convertedExpression, _operations);
+                var result = _mathProcessor.Process(convertedExpression, _mathOperationsContainer);
 
                 return result.ToString();
             }

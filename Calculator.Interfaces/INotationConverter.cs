@@ -1,5 +1,4 @@
 ﻿using Calculator.Domain.ExpressionUnits;
-using Calculator.Domain.MathOperations;
 using System.Collections.Generic;
 
 namespace Calculator.Interfaces
@@ -13,8 +12,8 @@ namespace Calculator.Interfaces
         /// Convert infix notation to reverse polish notation
         /// </summary>
         /// <param name="infixNotation">Infix notation</param>
-        /// <param name="mathOperations">Avaliable math operations</param>
+        /// <param name="mathOperationsContainer">Avaliable math operations</param>
         /// <returns>Reverse polish notation</returns>
-        IEnumerable<ExpressionUnit> ConvertToReversePolishNotation(IEnumerable<ExpressionUnit> infixNotation, MathOperation[] mathOperations);
+        IEnumerable<ExpressionUnit> ConvertToReversePolishNotation(IEnumerable<ExpressionUnit> infixNotation, IMathOperationsContainer mathOperationsContainer);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Calculator.Domain.ExpressionUnits;
-using Calculator.Domain.MathOperations;
 using System.Collections.Generic;
 
 namespace Calculator.Interfaces
@@ -13,8 +12,8 @@ namespace Calculator.Interfaces
         /// Execute operations in a mathematical expression
         /// </summary>
         /// <param name="expression">Mathematical expression</param>
-        /// <param name="mathOperations">Avaliable math operations</param>
+        /// <param name="mathOperationsContainer">Avaliable math operations</param>
         /// <returns>Execution result</returns>
-        double Process(IEnumerable<ExpressionUnit> expression, MathOperation[] mathOperations);
+        double Process(IEnumerable<ExpressionUnit> expression, IMathOperationsContainer mathOperationsContainer);
     }
 }

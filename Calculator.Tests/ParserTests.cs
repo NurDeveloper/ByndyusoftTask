@@ -1,5 +1,5 @@
 ﻿using Calculator.Domain.ExpressionUnits;
-using Calculator.Domain.MathOperations;
+using Calculator.Interfaces;
 using System;
 using Xunit;
 
@@ -7,13 +7,7 @@ namespace Calculator.Tests
 {
     public class ParserTests
     {
-        private readonly MathOperation[] _mathOperations = new MathOperation[]
-            {
-                new AddMathOperation(),
-                new SubMathOperation(),
-                new MulMathOperation(),
-                new DivMathOperation(),
-            };
+        private readonly IMathOperationsContainer _mathOperationsContainer = new MathOperationsContainer();
 
         private static void AssertExpressionUnitEqual(ExpressionUnit expectedItem, ExpressionUnit item)
         {
@@ -33,7 +27,7 @@ namespace Calculator.Tests
             var parser = new Parser();
             string inputValue = "2";
 
-            var result = parser.Parse(inputValue, _mathOperations);
+            var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             var expectedItem = new NumberExpressionUnit("2");
             Assert.Collection(result, item => AssertExpressionUnitEqual(expectedItem, item));
@@ -45,7 +39,7 @@ namespace Calculator.Tests
             var parser = new Parser();
             string inputValue = "23";
 
-            var result = parser.Parse(inputValue, _mathOperations);
+            var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             var expectedItem = new NumberExpressionUnit("23");
             Assert.Collection(result, item => AssertExpressionUnitEqual(expectedItem, item));
@@ -57,7 +51,7 @@ namespace Calculator.Tests
             var parser = new Parser();
             string inputValue = "23.5";
 
-            var result = parser.Parse(inputValue, _mathOperations);
+            var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             var expectedItem = new NumberExpressionUnit("23.5");
             Assert.Collection(result, item => AssertExpressionUnitEqual(expectedItem, item));
@@ -69,7 +63,7 @@ namespace Calculator.Tests
             var parser = new Parser();
             string inputValue = "3+2";
 
-            var result = parser.Parse(inputValue, _mathOperations);
+            var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
                 item => AssertExpressionUnitEqual(new NumberExpressionUnit("3"), item),
@@ -83,7 +77,7 @@ namespace Calculator.Tests
             var parser = new Parser();
             string inputValue = "3.1*(2.7+5)";
 
-            var result = parser.Parse(inputValue, _mathOperations);
+            var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
                 item => AssertExpressionUnitEqual(new NumberExpressionUnit("3.1"), item),
@@ -101,7 +95,7 @@ namespace Calculator.Tests
             var parser = new Parser();
             string inputValue = "5+b";
 
-            Action action = () => parser.Parse(inputValue, _mathOperations);
+            Action action = () => parser.Parse(inputValue, _mathOperationsContainer);
 
             var exception = Assert.Throws<ArgumentException>(action);
             Assert.Equal("Invalid mathematical expression or unsupported operation for parsing.", exception.Message);
@@ -113,7 +107,7 @@ namespace Calculator.Tests
             var parser = new Parser();
             string inputValue = "23,5";
 
-            var result = parser.Parse(inputValue, _mathOperations);
+            var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result, item => AssertExpressionUnitEqual(new NumberExpressionUnit("23.5"), item));
         }

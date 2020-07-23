@@ -1,10 +1,8 @@
 ﻿using Calculator.Domain.ExpressionUnits;
-using Calculator.Domain.MathOperations;
 using Calculator.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 
 namespace Calculator
@@ -18,11 +16,11 @@ namespace Calculator
         /// Parse string to terms of mathematical expression
         /// </summary>
         /// <param name="expression">Input expression</param>
-        /// <param name="mathOperations">Avaliable math operations</param>
+        /// <param name="mathOperationsContainer">Avaliable math operations</param>
         /// <returns>Parsed mathematical expression</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="NullReferenceException"></exception>
-        public IEnumerable<ExpressionUnit> Parse(string expression, MathOperation[] mathOperations)
+        public IEnumerable<ExpressionUnit> Parse(string expression, IMathOperationsContainer mathOperationsContainer)
         {
             var result = new List<ExpressionUnit>();
 
@@ -30,7 +28,7 @@ namespace Calculator
 
             for (var i = 0; i < expression.Length; i++)
             {
-                if (TryParseMathOperation(expression[i].ToString(), mathOperations, out ExpressionUnit mathOperation))
+                if (TryParseMathOperation(expression[i].ToString(), mathOperationsContainer, out ExpressionUnit mathOperation))
                 {
                     ParseValue(result, valueBuilder);
 
@@ -68,13 +66,11 @@ namespace Calculator
             }
         }
 
-        private static bool TryParseMathOperation(string expressionItem, MathOperation[] mathOperations, out ExpressionUnit expressionUnit)
+        private static bool TryParseMathOperation(string expressionItem, IMathOperationsContainer mathOperationsContainer, out ExpressionUnit expressionUnit)
         {
-            var mathOperation = mathOperations.FirstOrDefault(m => m.ToString() == expressionItem);
-
-            if (mathOperation != null)
+            if (mathOperationsContainer.ContainsOperation(expressionItem))
             {
-                expressionUnit = new OperationExpressionUnit(mathOperation.ToString());
+                expressionUnit = new OperationExpressionUnit(expressionItem);
 
                 return true;
             }

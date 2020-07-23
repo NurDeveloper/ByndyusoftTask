@@ -3,7 +3,6 @@ using Calculator.Interfaces;
 using System.Collections.Generic;
 using Calculator.Domain.ExpressionUnits;
 using System.Globalization;
-using System.Linq;
 using Calculator.Domain.MathOperations;
 
 namespace Calculator
@@ -17,12 +16,12 @@ namespace Calculator
         /// Execute operations in a mathematical expression
         /// </summary>
         /// <param name="expression">Mathematical expression</param>
-        /// <param name="mathOperations">Avaliable math operations</param>
+        /// <param name="mathOperationsContainer">Avaliable math operations</param>
         /// <returns>Execution result</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="DivideByZeroException"></exception>
         /// <exception cref="NullReferenceException"></exception>
-        public double Process(IEnumerable<ExpressionUnit> expression, MathOperation[] mathOperations)
+        public double Process(IEnumerable<ExpressionUnit> expression, IMathOperationsContainer mathOperationsContainer)
         {
             var stack = new Stack<double>();
 
@@ -36,7 +35,7 @@ namespace Calculator
 
                 if (item.Type == Domain.Enums.ExpressionUnitType.Operation)
                 {
-                    var operation = CreateOperationByKeyword(item, mathOperations);
+                    var operation = CreateOperationByKeyword(item, mathOperationsContainer);
 
                     operation.Operate(stack);
                 }
@@ -45,9 +44,9 @@ namespace Calculator
             return stack.Peek();
         }
 
-        private static MathOperation CreateOperationByKeyword(ExpressionUnit item, MathOperation[] mathOperations)
+        private static MathOperation CreateOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
         {
-            var operation = mathOperations.FirstOrDefault(m => m.ToString() == item.Value);
+            var operation = mathOperationsContainer.GetOperationOrDefault(item.Value);
 
             if (operation == null)
             {
