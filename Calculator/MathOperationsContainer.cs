@@ -7,7 +7,7 @@ namespace Calculator
     /// Container for mathematical operations. It has the characteristics
     /// of a Flyweight pattern
     /// </summary>
-    public class MathOperationsContainer
+    public class MathOperationsContainer : IMathOperationsContainer
     {
         private readonly Dictionary<string, MathOperation> _mathOperations;
 
@@ -33,10 +33,10 @@ namespace Calculator
         }
 
         /// <summary>
-        /// Getting a link to an operation by keyword
+        /// Getting a reference to an operation by keyword
         /// </summary>
         /// <param name="keyword">Operation keyword</param>
-        /// <returns>Returns a link to the operation by keyword or default instance</returns>
+        /// <returns>Returns a reference to the operation by keyword or default instance</returns>
         public MathOperation GetOperationOrDefault(string keyword)
         {
             _mathOperations.TryGetValue(keyword, out MathOperation mathOperation);
