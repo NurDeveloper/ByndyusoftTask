@@ -1,5 +1,4 @@
-﻿using Calculator.Domain.MathOperations;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Xunit;
 
 namespace Calculator.Tests
@@ -78,7 +77,7 @@ namespace Calculator.Tests
             stack.Push(2.00);
             stack.Push(3.00);
 
-            MathOperation mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
+            var mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
 
             mathOperation.Operate(stack);
 
@@ -97,7 +96,7 @@ namespace Calculator.Tests
             stack.Push(6.00);
             stack.Push(4.00);
 
-            MathOperation mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
+            var mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
 
             mathOperation.Operate(stack);
 
@@ -116,7 +115,7 @@ namespace Calculator.Tests
             stack.Push(5.00);
             stack.Push(5.00);
 
-            MathOperation mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
+            var mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
 
             mathOperation.Operate(stack);
 
@@ -135,7 +134,7 @@ namespace Calculator.Tests
             stack.Push(8.00);
             stack.Push(4.00);
 
-            MathOperation mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
+            var mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
 
             mathOperation.Operate(stack);
 
@@ -150,7 +149,7 @@ namespace Calculator.Tests
 
             var keyword = "&";
 
-            MathOperation mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
+            var mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
 
             Assert.Null(mathOperation);
         }
