@@ -1,6 +1,6 @@
 ﻿using Calculator.Domain.MathOperations;
 
-namespace Calculator
+namespace Calculator.Interfaces
 {
     /// <summary>
     /// Container for mathematical operations
