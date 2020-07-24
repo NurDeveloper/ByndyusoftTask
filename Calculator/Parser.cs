@@ -27,13 +27,13 @@ namespace Calculator
         {
             var result = new List<ExpressionUnit>();
 
-            var valueBuilder = new StringBuilder();
+            var numberBuilder = new StringBuilder();
 
             for (var i = 0; i < expression.Length; i++)
             {
                 OperationType operationType = OperationType.Unary;
 
-                var firstOperandExists = valueBuilder.Length != 0;
+                var firstOperandExists = numberBuilder.Length != 0;
                 if (firstOperandExists)
                 {
                     operationType = OperationType.Binary;
@@ -41,35 +41,35 @@ namespace Calculator
 
                 if (TryParseExpressionUnit(expression[i].ToString(), operationType, mathOperationsContainer, out ExpressionUnit mathOperation))
                 {
-                    ParseValue(result, valueBuilder);
+                    ParseNumber(result, numberBuilder);
 
                     result.Add(mathOperation);
 
                     continue;
                 }
 
-                valueBuilder.Append(expression[i]);
+                numberBuilder.Append(expression[i]);
             }
 
-            ParseValue(result, valueBuilder);
+            ParseNumber(result, numberBuilder);
 
             return result;
         }
 
-        private static void ParseValue(IList<ExpressionUnit> mathExpression, StringBuilder valueBuilder)
+        private static void ParseNumber(IList<ExpressionUnit> mathExpression, StringBuilder numberBuilder)
         {
-            if (valueBuilder.Length == 0)
+            if (numberBuilder.Length == 0)
             {
                 return;
             }
 
-            var valueAsString = valueBuilder.ToString().Replace(',', '.');
+            var numberAsString = numberBuilder.ToString().Replace(',', '.');
 
-            if (double.TryParse(valueAsString, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
+            if (double.TryParse(numberAsString, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
             {
-                mathExpression.Add(new NumberExpressionUnit(valueAsString));
+                mathExpression.Add(new NumberExpressionUnit(numberAsString));
 
-                valueBuilder.Clear();
+                numberBuilder.Clear();
             }
             else
             {
