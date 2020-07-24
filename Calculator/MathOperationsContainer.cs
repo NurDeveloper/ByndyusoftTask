@@ -1,4 +1,6 @@
-﻿using Calculator.Domain.MathOperations;
+﻿using Calculator.Domain;
+using Calculator.Domain.Enums;
+using Calculator.Domain.MathOperations;
 using Calculator.Interfaces;
 using System.Collections.Generic;
 
@@ -44,6 +46,28 @@ namespace Calculator
             _mathOperations.TryGetValue(keyword, out MathOperation mathOperation);
 
             return mathOperation;
+        }
+
+        /// <summary>
+        /// Getting the keyword of an operation by characteristics
+        /// </summary>
+        /// <param name="operationCharacteristics">Characteristics of a mathematical operation</param>
+        /// <returns>Returns the keyword of an operation or default instance</returns>
+        public string GetKeywordOrDefault(OperationCharacteristics operationCharacteristics)
+        {
+            if (operationCharacteristics.Type == OperationType.Binary
+                && _mathOperations.ContainsKey(operationCharacteristics.Value))
+            {
+                return operationCharacteristics.Value;
+            }
+
+            if (operationCharacteristics.Type == OperationType.Unary
+                && operationCharacteristics.Value == "-")
+            {
+                return "~";
+            }
+
+            return default(string);
         }
     }
 }

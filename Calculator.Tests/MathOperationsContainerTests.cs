@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Calculator.Domain;
+using Calculator.Domain.Enums;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Calculator.Tests
@@ -181,6 +183,83 @@ namespace Calculator.Tests
             var mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
 
             Assert.Null(mathOperation);
+        }
+
+        [Fact]
+        public void MathOperationsContainer_returns_keyword_of_add_operation_by_characteristics()
+        {
+            var mathOperationsContainer = new MathOperationsContainer();
+            var operationCharacteristics = new OperationCharacteristics("+", OperationType.Binary);
+
+            var keyword = mathOperationsContainer.GetKeywordOrDefault(operationCharacteristics);
+
+            Assert.Equal("+", keyword);
+        }
+
+        [Fact]
+        public void MathOperationsContainer_returns_keyword_of_sub_operation_by_characteristics()
+        {
+            var mathOperationsContainer = new MathOperationsContainer();
+            var operationCharacteristics = new OperationCharacteristics("-", OperationType.Binary);
+
+            var keyword = mathOperationsContainer.GetKeywordOrDefault(operationCharacteristics);
+
+            Assert.Equal("-", keyword);
+        }
+
+        [Fact]
+        public void MathOperationsContainer_returns_keyword_of_mul_operation_by_characteristics()
+        {
+            var mathOperationsContainer = new MathOperationsContainer();
+            var operationCharacteristics = new OperationCharacteristics("*", OperationType.Binary);
+
+            var keyword = mathOperationsContainer.GetKeywordOrDefault(operationCharacteristics);
+
+            Assert.Equal("*", keyword);
+        }
+
+        [Fact]
+        public void MathOperationsContainer_returns_keyword_of_div_operation_by_characteristics()
+        {
+            var mathOperationsContainer = new MathOperationsContainer();
+            var operationCharacteristics = new OperationCharacteristics("/", OperationType.Binary);
+
+            var keyword = mathOperationsContainer.GetKeywordOrDefault(operationCharacteristics);
+
+            Assert.Equal("/", keyword);
+        }
+
+        [Fact]
+        public void MathOperationsContainer_returns_keyword_of_unary_minus_operation_by_characteristics()
+        {
+            var mathOperationsContainer = new MathOperationsContainer();
+            var operationCharacteristics = new OperationCharacteristics("-", OperationType.Unary);
+
+            var keyword = mathOperationsContainer.GetKeywordOrDefault(operationCharacteristics);
+
+            Assert.Equal("~", keyword);
+        }
+
+        [Fact]
+        public void MathOperationsContainer_returns_default_keyword_for_unknown_value_and_binary()
+        {
+            var mathOperationsContainer = new MathOperationsContainer();
+            var operationCharacteristics = new OperationCharacteristics("&", OperationType.Binary);
+
+            var keyword = mathOperationsContainer.GetKeywordOrDefault(operationCharacteristics);
+
+            Assert.Null(keyword);
+        }
+
+        [Fact]
+        public void MathOperationsContainer_returns_default_keyword_for_unknown_value_and_unary()
+        {
+            var mathOperationsContainer = new MathOperationsContainer();
+            var operationCharacteristics = new OperationCharacteristics("&", OperationType.Unary);
+
+            var keyword = mathOperationsContainer.GetKeywordOrDefault(operationCharacteristics);
+
+            Assert.Null(keyword);
         }
     }
 }

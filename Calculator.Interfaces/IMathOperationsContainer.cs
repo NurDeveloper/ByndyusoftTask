@@ -1,4 +1,5 @@
-﻿using Calculator.Domain.MathOperations;
+﻿using Calculator.Domain;
+using Calculator.Domain.MathOperations;
 
 namespace Calculator.Interfaces
 {
@@ -20,5 +21,12 @@ namespace Calculator.Interfaces
         /// <param name="keyword">Operation keyword</param>
         /// <returns>Returns a reference to the operation by keyword or default instance</returns>
         MathOperation GetOperationOrDefault(string keyword);
+
+        /// <summary>
+        /// Getting the keyword of an operation by characteristics
+        /// </summary>
+        /// <param name="operationCharacteristics">Characteristics of a mathematical operation</param>
+        /// <returns>Returns the keyword of an operation or default instance</returns>
+        string GetKeywordOrDefault(OperationCharacteristics operationCharacteristics);
     }
 }
