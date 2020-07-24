@@ -14,5 +14,14 @@ namespace Calculator.Domain.ExpressionUnits
         public OperationExpressionUnit(string value) : base(value, ExpressionUnitType.Operation)
         {
         }
+
+        /// <summary>
+        /// Mathematical operation constructor for different keyword and value
+        /// </summary>
+        /// <param name="value">String representation of a mathematical operation</param>
+        /// <param name="keyword">Service keyword of the unit of expression</param>
+        public OperationExpressionUnit(string value, string keyword) : base(value, keyword, ExpressionUnitType.Operation)
+        {
+        }
     }
 }

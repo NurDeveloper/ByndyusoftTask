@@ -15,6 +15,20 @@ namespace Calculator.Domain.ExpressionUnits
         public ExpressionUnit(string value, ExpressionUnitType type)
         {
             Value = value;
+            Keyword = value;
+            Type = type;
+        }
+
+        /// <summary>
+        /// Expression unit constructor for different keyword and value
+        /// </summary>
+        /// <param name="value">String representation of the unit of expression</param>
+        /// <param name="keyword">Service keyword of the unit of expression</param>
+        /// <param name="type">Type of expression unit</param>
+        public ExpressionUnit(string value, string keyword, ExpressionUnitType type)
+        {
+            Value = value;
+            Keyword = keyword;
             Type = type;
         }
 
@@ -27,5 +41,10 @@ namespace Calculator.Domain.ExpressionUnits
         /// String representation of the unit of expression
         /// </summary>
         public string Value { get; }
+
+        /// <summary>
+        /// Service keyword of the unit of expression
+        /// </summary>
+        public string Keyword { get; }
     }
 }
