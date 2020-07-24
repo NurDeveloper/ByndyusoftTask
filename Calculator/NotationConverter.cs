@@ -59,7 +59,7 @@ namespace Calculator
                     continue;
                 }
 
-                var operation = CreateOperationByKeyword(item, mathOperationsContainer);
+                var operation = GetOperationByKeyword(item, mathOperationsContainer);
 
                 while (stack.Count() != 0)
                 {
@@ -69,7 +69,7 @@ namespace Calculator
                         break;
                     }
 
-                    if (CreateOperationByKeyword(peek, mathOperationsContainer).Priority <= operation.Priority)
+                    if (GetOperationByKeyword(peek, mathOperationsContainer).Priority <= operation.Priority)
                     {
                         break;
                     }
@@ -96,7 +96,7 @@ namespace Calculator
             return result;
         }
 
-        private static MathOperation CreateOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
+        private static MathOperation GetOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
         {
             var operation = mathOperationsContainer.GetOperationOrDefault(item.Keyword);
 
