@@ -19,7 +19,8 @@ namespace Calculator
                 { "+", new AddMathOperation() },
                 { "-", new SubMathOperation() },
                 { "*", new MulMathOperation() },
-                { "/", new DivMathOperation() }
+                { "/", new DivMathOperation() },
+                { "~", new UnaryMinusMathOperation() }
             };
         }
 

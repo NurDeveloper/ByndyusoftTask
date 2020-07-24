@@ -56,6 +56,17 @@ namespace Calculator.Tests
         }
 
         [Fact]
+        public void MathOperationsContainer_returns_true_for_unary_minus_operation_by_keyword()
+        {
+            var mathOperationsContainer = new MathOperationsContainer();
+            var keyword = "~";
+
+            var result = mathOperationsContainer.ContainsOperation(keyword);
+
+            Assert.True(result);
+        }
+
+        [Fact]
         public void MathOperationsContainer_returns_false_for_wrong_keyword()
         {
             var mathOperationsContainer = new MathOperationsContainer();
@@ -140,6 +151,24 @@ namespace Calculator.Tests
 
             Assert.Equal(2, mathOperation.Priority);
             Assert.Equal(2.00, stack.Peek());
+        }
+
+        [Fact]
+        public void MathOperationsContainer_returns_unary_minus_operation_by_keyword()
+        {
+            var mathOperationsContainer = new MathOperationsContainer();
+
+            var keyword = "~";
+
+            var stack = new Stack<double>();
+            stack.Push(8.00);
+
+            var mathOperation = mathOperationsContainer.GetOperationOrDefault(keyword);
+
+            mathOperation.Operate(stack);
+
+            Assert.Equal(1, mathOperation.Priority);
+            Assert.Equal(-8.00, stack.Peek());
         }
 
         [Fact]
