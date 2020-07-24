@@ -1,4 +1,5 @@
-﻿using Calculator.Domain.ExpressionUnits;
+﻿using Calculator.Domain.Enums;
+using Calculator.Domain.ExpressionUnits;
 using Calculator.Domain.MathOperations;
 using Calculator.Interfaces;
 using System;
@@ -27,23 +28,23 @@ namespace Calculator
 
             foreach (var item in infixNotation)
             {
-                if (item.Type == Domain.Enums.ExpressionUnitType.Number)
+                if (item.Type == ExpressionUnitType.Number)
                 {
                     result.Add(item);
 
                     continue;
                 }
 
-                if (item.Type == Domain.Enums.ExpressionUnitType.LeftBracket)
+                if (item.Type == ExpressionUnitType.LeftBracket)
                 {
                     stack.Push(item);
 
                     continue;
                 }
 
-                if (item.Type == Domain.Enums.ExpressionUnitType.RightBracket)
+                if (item.Type == ExpressionUnitType.RightBracket)
                 {
-                    while (stack.Count != 0 && !(stack.Peek().Type == Domain.Enums.ExpressionUnitType.LeftBracket))
+                    while (stack.Count != 0 && !(stack.Peek().Type == ExpressionUnitType.LeftBracket))
                     {
                         result.Add(stack.Pop());
                     }
@@ -63,7 +64,7 @@ namespace Calculator
                 while (stack.Count() != 0)
                 {
                     var peek = stack.Peek();
-                    if (peek.Type != Domain.Enums.ExpressionUnitType.Operation)
+                    if (peek.Type != ExpressionUnitType.Operation)
                     {
                         break;
                     }
@@ -82,7 +83,7 @@ namespace Calculator
             while (stack.Count() != 0)
             {
                 var peek = stack.Peek();
-                if ((peek.Type == Domain.Enums.ExpressionUnitType.Operation) && !(peek.Type == Domain.Enums.ExpressionUnitType.LeftBracket))
+                if ((peek.Type == ExpressionUnitType.Operation) && !(peek.Type == ExpressionUnitType.LeftBracket))
                 {
                     result.Add(stack.Pop());
                 }
@@ -97,7 +98,7 @@ namespace Calculator
 
         private static MathOperation CreateOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
         {
-            var operation = mathOperationsContainer.GetOperationOrDefault(item.Value);
+            var operation = mathOperationsContainer.GetOperationOrDefault(item.Keyword);
 
             if (operation == null)
             {

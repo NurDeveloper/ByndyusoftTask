@@ -12,7 +12,7 @@ namespace Calculator.Tests
         private static void AssertExpressionUnitEqual(ExpressionUnit expectedItem, ExpressionUnit item)
         {
             Assert.Equal(expectedItem.Type, item.Type);
-            Assert.Equal(expectedItem.Value, item.Value);
+            Assert.Equal(expectedItem.Keyword, item.Keyword);
         }
 
         [Fact]

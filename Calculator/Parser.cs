@@ -77,7 +77,7 @@ namespace Calculator
 
             var leftBracketExpressionUnit = new LeftBracketExpressionUnit();
 
-            if (expressionItem == leftBracketExpressionUnit.Value)
+            if (expressionItem == leftBracketExpressionUnit.Keyword)
             {
                 expressionUnit = leftBracketExpressionUnit;
 
@@ -86,7 +86,7 @@ namespace Calculator
 
             var rightBracketExpressionUnit = new RightBracketExpressionUnit();
 
-            if (expressionItem == rightBracketExpressionUnit.Value)
+            if (expressionItem == rightBracketExpressionUnit.Keyword)
             {
                 expressionUnit = rightBracketExpressionUnit;
 

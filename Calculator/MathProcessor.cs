@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Calculator.Domain.ExpressionUnits;
 using System.Globalization;
 using Calculator.Domain.MathOperations;
+using Calculator.Domain.Enums;
 
 namespace Calculator
 {
@@ -27,13 +28,13 @@ namespace Calculator
 
             foreach (var item in expression)
             {
-                if (item.Type == Domain.Enums.ExpressionUnitType.Number)
+                if (item.Type == ExpressionUnitType.Number)
                 {
                     stack.Push(double.Parse(item.Value, NumberStyles.Any, CultureInfo.InvariantCulture));
                     continue;
                 }
 
-                if (item.Type == Domain.Enums.ExpressionUnitType.Operation)
+                if (item.Type == ExpressionUnitType.Operation)
                 {
                     var operation = CreateOperationByKeyword(item, mathOperationsContainer);
 
@@ -46,7 +47,7 @@ namespace Calculator
 
         private static MathOperation CreateOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
         {
-            var operation = mathOperationsContainer.GetOperationOrDefault(item.Value);
+            var operation = mathOperationsContainer.GetOperationOrDefault(item.Keyword);
 
             if (operation == null)
             {
