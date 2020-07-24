@@ -58,6 +58,52 @@ namespace Calculator.Tests
         }
 
         [Fact]
+        public void Parser_parses_digit_with_unary_minus()
+        {
+            var parser = new Parser();
+            string inputValue = "-8";
+
+            var result = parser.Parse(inputValue, _mathOperationsContainer);
+
+            Assert.Collection(result,
+                item => AssertExpressionUnitEqual(new OperationExpressionUnit("~"), item),
+                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8"), item));
+        }
+
+        [Fact]
+        public void Parser_parses_digit_with_unary_minus_and_brackets()
+        {
+            var parser = new Parser();
+            string inputValue = "-(-8)";
+
+            var result = parser.Parse(inputValue, _mathOperationsContainer);
+
+            Assert.Collection(result,
+                item => AssertExpressionUnitEqual(new OperationExpressionUnit("~"), item),
+                item => AssertExpressionUnitEqual(new LeftBracketExpressionUnit(), item),
+                item => AssertExpressionUnitEqual(new OperationExpressionUnit("~"), item),
+                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8"), item),
+                item => AssertExpressionUnitEqual(new RightBracketExpressionUnit(), item));
+        }
+
+        [Fact]
+        public void Parser_parses_digit_with_unary_minus_and_sub_operation_in_brackets()
+        {
+            var parser = new Parser();
+            string inputValue = "-(8-2)";
+
+            var result = parser.Parse(inputValue, _mathOperationsContainer);
+
+            Assert.Collection(result,
+                item => AssertExpressionUnitEqual(new OperationExpressionUnit("~"), item),
+                item => AssertExpressionUnitEqual(new LeftBracketExpressionUnit(), item),
+                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8"), item),
+                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-"), item),
+                item => AssertExpressionUnitEqual(new NumberExpressionUnit("2"), item),
+                item => AssertExpressionUnitEqual(new RightBracketExpressionUnit(), item));
+        }
+
+        [Fact]
         public void Parser_parses_digit_and_operation()
         {
             var parser = new Parser();

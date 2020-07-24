@@ -1,8 +1,11 @@
-﻿using Calculator.Domain.ExpressionUnits;
+﻿using Calculator.Domain;
+using Calculator.Domain.Enums;
+using Calculator.Domain.ExpressionUnits;
 using Calculator.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace Calculator
@@ -28,7 +31,15 @@ namespace Calculator
 
             for (var i = 0; i < expression.Length; i++)
             {
-                if (TryParseMathOperation(expression[i].ToString(), mathOperationsContainer, out ExpressionUnit mathOperation))
+                OperationType operationType = OperationType.Unary;
+
+                var firstOperandExists = valueBuilder.Length != 0;
+                if (firstOperandExists)
+                {
+                    operationType = OperationType.Binary;
+                }
+
+                if (TryParseExpressionUnit(expression[i].ToString(), operationType, mathOperationsContainer, out ExpressionUnit mathOperation))
                 {
                     ParseValue(result, valueBuilder);
 
@@ -45,7 +56,7 @@ namespace Calculator
             return result;
         }
 
-        private static void ParseValue(List<ExpressionUnit> mathExpression, StringBuilder valueBuilder)
+        private static void ParseValue(IList<ExpressionUnit> mathExpression, StringBuilder valueBuilder)
         {
             if (valueBuilder.Length == 0)
             {
@@ -66,11 +77,12 @@ namespace Calculator
             }
         }
 
-        private static bool TryParseMathOperation(string expressionItem, IMathOperationsContainer mathOperationsContainer, out ExpressionUnit expressionUnit)
+        private static bool TryParseExpressionUnit(string expressionItem, OperationType operationType, IMathOperationsContainer mathOperationsContainer, out ExpressionUnit expressionUnit)
         {
-            if (mathOperationsContainer.ContainsOperation(expressionItem))
+            var keyword = mathOperationsContainer.GetKeywordOrDefault(new OperationCharacteristics(expressionItem, operationType));
+            if (!string.IsNullOrEmpty(keyword))
             {
-                expressionUnit = new OperationExpressionUnit(expressionItem);
+                expressionUnit = new OperationExpressionUnit(expressionItem, keyword);
 
                 return true;
             }
