@@ -36,7 +36,7 @@ namespace Calculator
 
                 if (item.Type == ExpressionUnitType.Operation)
                 {
-                    var operation = CreateOperationByKeyword(item, mathOperationsContainer);
+                    var operation = GetOperationByKeyword(item, mathOperationsContainer);
 
                     operation.Operate(stack);
                 }
@@ -45,7 +45,7 @@ namespace Calculator
             return stack.Peek();
         }
 
-        private static MathOperation CreateOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
+        private static MathOperation GetOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
         {
             var operation = mathOperationsContainer.GetOperationOrDefault(item.Keyword);
 
