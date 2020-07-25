@@ -101,6 +101,67 @@ namespace Calculator.Tests
         }
 
         [Fact]
+        public void NotationConverter_converts_digit_with_unary_minus_to_RPN()
+        {
+            var notationConverter = new NotationConverter();
+            var inputValue = new List<ExpressionUnit>()
+            {
+                new OperationExpressionUnit("-", "~"),
+                new NumberExpressionUnit("8.00")
+            };
+
+            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
+
+            Assert.Collection(result,
+                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8.00"), item),
+                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-", "~"), item));
+        }
+
+        [Fact]
+        public void NotationConverter_converts_digit_with_unary_minus_and_brackets_to_RPN()
+        {
+            var notationConverter = new NotationConverter();
+            var inputValue = new List<ExpressionUnit>()
+            {
+                new OperationExpressionUnit("-", "~"),
+                new LeftBracketExpressionUnit(),
+                new OperationExpressionUnit("-", "~"),
+                new NumberExpressionUnit("8.00"),
+                new RightBracketExpressionUnit()
+            };
+
+            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
+
+            Assert.Collection(result,
+                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8.00"), item),
+                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-", "~"), item),
+                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-", "~"), item));
+        }
+
+        [Fact]
+        public void NotationConverter_converts_digit_with_unary_minus_and_sub_operation_in_brackets_to_RPN()
+        {
+            var notationConverter = new NotationConverter();
+            var inputValue = new List<ExpressionUnit>()
+            {
+                new OperationExpressionUnit("-", "~"),
+                new LeftBracketExpressionUnit(),
+                new NumberExpressionUnit("8.00"),
+                new OperationExpressionUnit("-"),
+                new NumberExpressionUnit("2.00"),
+                new RightBracketExpressionUnit()
+            };
+
+            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
+
+            Assert.Collection(result,
+                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8.00"), item),
+                item => AssertExpressionUnitEqual(new NumberExpressionUnit("2.00"), item),
+                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-"), item),
+                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-", "~"), item));
+        }
+
+        [Fact]
         public void NotationConverter_throws_custom_exception_for_wrong_brackets()
         {
             var notationConverter = new NotationConverter();
