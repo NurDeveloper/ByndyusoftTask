@@ -113,6 +113,54 @@ namespace Calculator.Tests
         }
 
         [Fact]
+        public void MathProcessor_returns_result_of_digit_with_unary_minus()
+        {
+            var mathProcessor = new MathProcessor();
+            var inputExpression = new List<ExpressionUnit>()
+            {
+                new NumberExpressionUnit("8.00"),
+                new OperationExpressionUnit("-", "~")
+            };
+
+            var result = mathProcessor.Process(inputExpression, _mathOperationsContainer);
+
+            Assert.Equal(-8.00, result);
+        }
+
+        [Fact]
+        public void MathProcessor_returns_result_of_digit_with_unary_minus_and_brackets()
+        {
+            var mathProcessor = new MathProcessor();
+            var inputExpression = new List<ExpressionUnit>()
+            {
+                new NumberExpressionUnit("8.00"),
+                new OperationExpressionUnit("-", "~"),
+                new OperationExpressionUnit("-", "~")
+            };
+
+            var result = mathProcessor.Process(inputExpression, _mathOperationsContainer);
+
+            Assert.Equal(8.00, result);
+        }
+
+        [Fact]
+        public void MathProcessor_returns_result_of_digit_with_unary_minus_and_sub_operation_in_brackets()
+        {
+            var mathProcessor = new MathProcessor();
+            var inputExpression = new List<ExpressionUnit>()
+            {
+                new NumberExpressionUnit("8.00"),
+                new NumberExpressionUnit("2.00"),
+                new OperationExpressionUnit("-", "-"),
+                new OperationExpressionUnit("-", "~")
+            };
+
+            var result = mathProcessor.Process(inputExpression, _mathOperationsContainer);
+
+            Assert.Equal(-6.00, result);
+        }
+
+        [Fact]
         public void MathProcessor_returns_divide_by_zero_exception()
         {
             var mathProcessor = new MathProcessor();
