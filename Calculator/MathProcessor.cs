@@ -30,7 +30,7 @@ namespace Calculator
             {
                 if (item.Type == ExpressionUnitType.Number)
                 {
-                    stack.Push(double.Parse(item.Value, NumberStyles.Any, CultureInfo.InvariantCulture));
+                    stack.Push(double.Parse(item.Keyword, NumberStyles.Any, CultureInfo.InvariantCulture));
                     continue;
                 }
 

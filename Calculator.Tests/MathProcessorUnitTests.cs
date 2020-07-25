@@ -113,6 +113,20 @@ namespace Calculator.Tests
         }
 
         [Fact]
+        public void MathProcessor_returns_result_of_digit_with_comma()
+        {
+            var mathProcessor = new MathProcessor();
+            var inputExpression = new List<ExpressionUnit>()
+            {
+                new NumberExpressionUnit("23,50", "23.50")
+            };
+
+            var result = mathProcessor.Process(inputExpression, _mathOperationsContainer);
+
+            Assert.Equal(23.50, result);
+        }
+
+        [Fact]
         public void MathProcessor_returns_result_of_digit_with_unary_minus()
         {
             var mathProcessor = new MathProcessor();

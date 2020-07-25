@@ -14,5 +14,14 @@ namespace Calculator.Domain.ExpressionUnits
         public NumberExpressionUnit(string value) : base(value, ExpressionUnitType.Number)
         {
         }
+
+        /// <summary>
+        /// Real number constructor for different culture settings
+        /// </summary>
+        /// <param name="value">String representation of a real number</param>
+        /// <param name="keyword">Service keyword for culture-independent value</param>
+        public NumberExpressionUnit(string value, string keyword) : base(value, keyword, ExpressionUnitType.Number)
+        {
+        }
     }
 }

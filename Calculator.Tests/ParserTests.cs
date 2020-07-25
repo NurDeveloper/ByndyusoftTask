@@ -53,6 +53,17 @@ namespace Calculator.Tests
         }
 
         [Fact]
+        public void Parser_correct_parses_digit_with_comma()
+        {
+            var parser = new Parser();
+            string inputValue = "23,5";
+
+            var result = parser.Parse(inputValue, _mathOperationsContainer);
+
+            Assert.Collection(result, item => AssertExpressionUnit.Equal(new NumberExpressionUnit("23,5", "23.5"), item));
+        }
+
+        [Fact]
         public void Parser_parses_digit_with_unary_minus()
         {
             var parser = new Parser();
@@ -140,17 +151,6 @@ namespace Calculator.Tests
 
             var exception = Assert.Throws<ArgumentException>(action);
             Assert.Equal("Invalid mathematical expression or unsupported operation for parsing.", exception.Message);
-        }
-
-        [Fact]
-        public void Parser_correct_parses_digit_with_comma()
-        {
-            var parser = new Parser();
-            string inputValue = "23,5";
-
-            var result = parser.Parse(inputValue, _mathOperationsContainer);
-
-            Assert.Collection(result, item => AssertExpressionUnit.Equal(new NumberExpressionUnit("23.5"), item));
         }
     }
 }

@@ -62,11 +62,12 @@ namespace Calculator
                 return;
             }
 
-            var numberAsString = numberBuilder.ToString().Replace(',', '.');
+            var numberAsString = numberBuilder.ToString();
+            var numberAsInvariantCultureString = numberAsString.Replace(',', '.');
 
-            if (double.TryParse(numberAsString, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
+            if (double.TryParse(numberAsInvariantCultureString, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
             {
-                mathExpression.Add(new NumberExpressionUnit(numberAsString));
+                mathExpression.Add(new NumberExpressionUnit(numberAsString, numberAsInvariantCultureString));
 
                 numberBuilder.Clear();
             }
