@@ -1,5 +1,6 @@
 ﻿using Calculator.Domain.ExpressionUnits;
 using Calculator.Interfaces;
+using Calculator.Tests.AssertExtensions;
 using System;
 using Xunit;
 
@@ -8,12 +9,6 @@ namespace Calculator.Tests
     public class ParserTests
     {
         private readonly IMathOperationsContainer _mathOperationsContainer = new MathOperationsContainer();
-
-        private static void AssertExpressionUnitEqual(ExpressionUnit expectedItem, ExpressionUnit item)
-        {
-            Assert.Equal(expectedItem.Type, item.Type);
-            Assert.Equal(expectedItem.Keyword, item.Keyword);
-        }
 
         [Fact]
         public void Parser_should_be()
@@ -30,7 +25,7 @@ namespace Calculator.Tests
             var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             var expectedItem = new NumberExpressionUnit("2");
-            Assert.Collection(result, item => AssertExpressionUnitEqual(expectedItem, item));
+            Assert.Collection(result, item => AssertExpressionUnit.Equal(expectedItem, item));
         }
 
         [Fact]
@@ -42,7 +37,7 @@ namespace Calculator.Tests
             var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             var expectedItem = new NumberExpressionUnit("23");
-            Assert.Collection(result, item => AssertExpressionUnitEqual(expectedItem, item));
+            Assert.Collection(result, item => AssertExpressionUnit.Equal(expectedItem, item));
         }
 
         [Fact]
@@ -54,7 +49,7 @@ namespace Calculator.Tests
             var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             var expectedItem = new NumberExpressionUnit("23.5");
-            Assert.Collection(result, item => AssertExpressionUnitEqual(expectedItem, item));
+            Assert.Collection(result, item => AssertExpressionUnit.Equal(expectedItem, item));
         }
 
         [Fact]
@@ -66,8 +61,8 @@ namespace Calculator.Tests
             var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("~"), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8"), item));
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("~"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("8"), item));
         }
 
         [Fact]
@@ -79,11 +74,11 @@ namespace Calculator.Tests
             var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("~"), item),
-                item => AssertExpressionUnitEqual(new LeftBracketExpressionUnit(), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("~"), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8"), item),
-                item => AssertExpressionUnitEqual(new RightBracketExpressionUnit(), item));
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("~"), item),
+                item => AssertExpressionUnit.Equal(new LeftBracketExpressionUnit(), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("~"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("8"), item),
+                item => AssertExpressionUnit.Equal(new RightBracketExpressionUnit(), item));
         }
 
         [Fact]
@@ -95,12 +90,12 @@ namespace Calculator.Tests
             var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("~"), item),
-                item => AssertExpressionUnitEqual(new LeftBracketExpressionUnit(), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-"), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("2"), item),
-                item => AssertExpressionUnitEqual(new RightBracketExpressionUnit(), item));
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("~"), item),
+                item => AssertExpressionUnit.Equal(new LeftBracketExpressionUnit(), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("8"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("-"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("2"), item),
+                item => AssertExpressionUnit.Equal(new RightBracketExpressionUnit(), item));
         }
 
         [Fact]
@@ -112,9 +107,9 @@ namespace Calculator.Tests
             var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("3"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("+"), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("2"), item));
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("3"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("+"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("2"), item));
         }
 
         [Fact]
@@ -126,13 +121,13 @@ namespace Calculator.Tests
             var result = parser.Parse(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("3.1"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("*"), item),
-                item => AssertExpressionUnitEqual(new LeftBracketExpressionUnit(), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("2.7"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("+"), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("5"), item),
-                item => AssertExpressionUnitEqual(new RightBracketExpressionUnit(), item));
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("3.1"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("*"), item),
+                item => AssertExpressionUnit.Equal(new LeftBracketExpressionUnit(), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("2.7"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("+"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("5"), item),
+                item => AssertExpressionUnit.Equal(new RightBracketExpressionUnit(), item));
         }
 
         [Fact]
@@ -155,7 +150,7 @@ namespace Calculator.Tests
 
             var result = parser.Parse(inputValue, _mathOperationsContainer);
 
-            Assert.Collection(result, item => AssertExpressionUnitEqual(new NumberExpressionUnit("23.5"), item));
+            Assert.Collection(result, item => AssertExpressionUnit.Equal(new NumberExpressionUnit("23.5"), item));
         }
     }
 }

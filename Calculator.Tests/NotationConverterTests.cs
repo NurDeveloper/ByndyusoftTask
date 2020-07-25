@@ -1,5 +1,6 @@
 ﻿using Calculator.Domain.ExpressionUnits;
 using Calculator.Interfaces;
+using Calculator.Tests.AssertExtensions;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -9,12 +10,6 @@ namespace Calculator.Tests
     public class NotationConverterTests
     {
         private readonly IMathOperationsContainer _mathOperationsContainer = new MathOperationsContainer();
-
-        private static void AssertExpressionUnitEqual(ExpressionUnit expectedItem, ExpressionUnit item)
-        {
-            Assert.Equal(expectedItem.Type, item.Type);
-            Assert.Equal(expectedItem.Keyword, item.Keyword);
-        }
 
         [Fact]
         public void NotationConverter_should_be()
@@ -34,7 +29,7 @@ namespace Calculator.Tests
             var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             var expectedItem = new NumberExpressionUnit("2.00");
-            Assert.Collection(result, item => AssertExpressionUnitEqual(expectedItem, item));
+            Assert.Collection(result, item => AssertExpressionUnit.Equal(expectedItem, item));
         }
 
         [Fact]
@@ -51,9 +46,9 @@ namespace Calculator.Tests
             var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("3.00"), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("2.00"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("+"), item));
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("3.00"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("2.00"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("+"), item));
         }
 
         [Fact]
@@ -72,11 +67,11 @@ namespace Calculator.Tests
             var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("4.00"), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("2.00"), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("3.00"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("*"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("+"), item));
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("4.00"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("2.00"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("3.00"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("*"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("+"), item));
         }
 
         [Fact]
@@ -95,9 +90,9 @@ namespace Calculator.Tests
             var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("3.00"), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("2.00"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("+"), item));
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("3.00"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("2.00"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("+"), item));
         }
 
         [Fact]
@@ -113,8 +108,8 @@ namespace Calculator.Tests
             var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8.00"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-", "~"), item));
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("8.00"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("-", "~"), item));
         }
 
         [Fact]
@@ -133,9 +128,9 @@ namespace Calculator.Tests
             var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8.00"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-", "~"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-", "~"), item));
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("8.00"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("-", "~"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("-", "~"), item));
         }
 
         [Fact]
@@ -155,10 +150,10 @@ namespace Calculator.Tests
             var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
 
             Assert.Collection(result,
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("8.00"), item),
-                item => AssertExpressionUnitEqual(new NumberExpressionUnit("2.00"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-"), item),
-                item => AssertExpressionUnitEqual(new OperationExpressionUnit("-", "~"), item));
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("8.00"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("2.00"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("-"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("-", "~"), item));
         }
 
         [Fact]
