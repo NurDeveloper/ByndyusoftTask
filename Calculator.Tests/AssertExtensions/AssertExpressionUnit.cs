@@ -8,6 +8,7 @@ namespace Calculator.Tests.AssertExtensions
         public static void Equal(ExpressionUnit expectedItem, ExpressionUnit actualItem)
         {
             Assert.Equal(expectedItem.Type, actualItem.Type);
+            Assert.Equal(expectedItem.Value, actualItem.Value);
             Assert.Equal(expectedItem.Keyword, actualItem.Keyword);
         }
     }
