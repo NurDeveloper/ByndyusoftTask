@@ -33,10 +33,5 @@ namespace Calculator.Domain.MathOperations
                 throw new ArgumentException("Invalid mathematical expression.");
             }
         }
-
-        public override string ToString()
-        {
-            return "/";
-        }
     }
 }
