@@ -9,6 +9,8 @@ namespace Calculator.Domain.MathOperations
     /// </summary>
     public class MulMathOperation : MathOperation
     {
+        public const string Keyword = "*";
+
         public override int Priority => 2;
 
         public override void Operate(Stack<double> stack)

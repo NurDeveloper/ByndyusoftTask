@@ -9,6 +9,8 @@ namespace Calculator.Domain.MathOperations
     /// </summary>
     public class AddMathOperation : MathOperation
     {
+        public const string Keyword = "+";
+
         public override int Priority => 1;
 
         public override void Operate(Stack<double> stack)
@@ -23,11 +25,6 @@ namespace Calculator.Domain.MathOperations
             {
                 throw new ArgumentException("Invalid mathematical expression.");
             }
-        }
-
-        public override string ToString()
-        {
-            return "+";
         }
     }
 }

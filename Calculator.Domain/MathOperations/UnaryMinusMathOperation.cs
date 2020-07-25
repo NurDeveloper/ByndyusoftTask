@@ -9,6 +9,8 @@ namespace Calculator.Domain.MathOperations
     /// </summary>
     public class UnaryMinusMathOperation : MathOperation
     {
+        public const string Keyword = "~";
+
         public override int Priority => 1;
 
         public override void Operate(Stack<double> stack)

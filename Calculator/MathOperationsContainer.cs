@@ -18,11 +18,11 @@ namespace Calculator
         {
             _mathOperations = new Dictionary<string, MathOperation>
             {
-                { "+", new AddMathOperation() },
-                { "-", new SubMathOperation() },
-                { "*", new MulMathOperation() },
-                { "/", new DivMathOperation() },
-                { "~", new UnaryMinusMathOperation() }
+                { AddMathOperation.Keyword, new AddMathOperation() },
+                { SubMathOperation.Keyword, new SubMathOperation() },
+                { MulMathOperation.Keyword, new MulMathOperation() },
+                { DivMathOperation.Keyword, new DivMathOperation() },
+                { UnaryMinusMathOperation.Keyword, new UnaryMinusMathOperation() }
             };
         }
 
@@ -56,7 +56,7 @@ namespace Calculator
         public string GetKeywordOrDefault(OperationCharacteristics operationCharacteristics)
         {
             if (operationCharacteristics.Type == OperationType.Binary
-                && _mathOperations.ContainsKey(operationCharacteristics.Value))
+                && ContainsOperation(operationCharacteristics.Value))
             {
                 return operationCharacteristics.Value;
             }
@@ -64,7 +64,7 @@ namespace Calculator
             if (operationCharacteristics.Type == OperationType.Unary
                 && operationCharacteristics.Value == "-")
             {
-                return "~";
+                return UnaryMinusMathOperation.Keyword;
             }
 
             return default(string);
