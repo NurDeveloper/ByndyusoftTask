@@ -10,7 +10,7 @@ namespace Calculator.MathOperations
     /// </summary>
     public class MulMathOperation : IMathOperation
     {
-        public const string Keyword = "*";
+        public string Keyword => "*";
 
         public int Priority => 2;
 

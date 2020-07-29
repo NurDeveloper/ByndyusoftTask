@@ -12,17 +12,22 @@ namespace Calculator
     /// </summary>
     public class MathOperationsContainer : IMathOperationsContainer
     {
-        private readonly Dictionary<string, IMathOperation> _mathOperations;
+        private readonly Dictionary<string, IMathOperation> _mathOperations = new Dictionary<string, IMathOperation>();
 
         public MathOperationsContainer()
         {
-            _mathOperations = new Dictionary<string, IMathOperation>
+            IEnumerable<IMathOperation> mathOperations = new List<IMathOperation>
             {
-                { AddMathOperation.Keyword, new AddMathOperation() },
-                { SubMathOperation.Keyword, new SubMathOperation() },
-                { MulMathOperation.Keyword, new MulMathOperation() },
-                { DivMathOperation.Keyword, new DivMathOperation() },
-                { UnaryMinusMathOperation.Keyword, new UnaryMinusMathOperation() }
+                new AddMathOperation(),
+                new SubMathOperation(),
+                new MulMathOperation(),
+                new DivMathOperation(),
+                new UnaryMinusMathOperation()
+            };
+
+            foreach (var operation in mathOperations)
+            {
+                _mathOperations.Add(operation.Keyword, operation);
             };
         }
 
@@ -64,7 +69,7 @@ namespace Calculator
             if (operationCharacteristics.Type == OperationType.Unary
                 && operationCharacteristics.Value == "-")
             {
-                return UnaryMinusMathOperation.Keyword;
+                return "~";
             }
 
             return default(string);

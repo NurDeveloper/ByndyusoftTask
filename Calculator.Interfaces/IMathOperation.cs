@@ -8,6 +8,11 @@ namespace Calculator.Interfaces
     public interface IMathOperation
     {
         /// <summary>
+        /// Keyword of math operation
+        /// </summary>
+        string Keyword { get; }
+
+        /// <summary>
         /// Priority of math operation
         /// </summary>
         int Priority { get; }
