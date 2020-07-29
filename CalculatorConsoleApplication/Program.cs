@@ -1,8 +1,7 @@
-﻿using Calculator;
+﻿using Autofac;
+using Calculator;
 using Calculator.Interfaces;
-using Calculator.MathOperations;
 using System;
-using System.Collections.Generic;
 
 namespace CalculatorConsoleApplication
 {
@@ -10,39 +9,53 @@ namespace CalculatorConsoleApplication
     {
         static void Main(string[] args)
         {
-            var mathOperations = new List<IMathOperation>
+            var container = ConfigureContainer();
+            using (var scope = container.BeginLifetimeScope())
             {
-                new AddMathOperation(),
-                new SubMathOperation(),
-                new MulMathOperation(),
-                new DivMathOperation(),
-                new UnaryMinusMathOperation()
-            };
+                var mathOperationsContainer = container.Resolve<IMathOperationsContainer>();
+                var parser = scope.Resolve<IParser>();
+                var notationConverter = scope.Resolve<INotationConverter>();
+                var mathProcessor = scope.Resolve<IMathProcessor>();
 
-            var mathOperationsContainer = new MathOperationsContainer(mathOperations);
-            var parser = new Parser();
-            var notationConverter = new NotationConverter();
-            var mathProcessor = new MathProcessor();
+                var calculator = new MathCalculator(parser, notationConverter, mathProcessor, mathOperationsContainer);
 
-            var calculator = new MathCalculator(parser, notationConverter, mathProcessor, mathOperationsContainer);
-
-            Console.WriteLine("Calculator");
-            Console.WriteLine("To complete the work, type exit.");
-            while (true)
-            {
-                Console.Write("Enter a math expression: ");
-                var expression = Console.ReadLine();
-
-                if (expression == "exit")
+                Console.WriteLine("Calculator");
+                Console.WriteLine("To complete the work, type exit.");
+                while (true)
                 {
-                    Console.WriteLine("Work completed.");
-                    break;
+                    Console.Write("Enter a math expression: ");
+                    var expression = Console.ReadLine();
+
+                    if (expression == "exit")
+                    {
+                        Console.WriteLine("Work completed.");
+                        break;
+                    }
+
+                    var result = calculator.Calculate(expression);
+                    Console.WriteLine("Result: {0}", result);
+
                 }
-
-                var result = calculator.Calculate(expression);
-                Console.WriteLine("Result: {0}", result);
-
             }
+        }
+
+        private static IContainer ConfigureContainer()
+        {
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<MathOperationsContainer>().As<IMathOperationsContainer>().SingleInstance();
+            builder.RegisterType<Parser>().As<IParser>().SingleInstance();
+            builder.RegisterType<NotationConverter>().As<INotationConverter>().SingleInstance();
+            builder.RegisterType<MathProcessor>().As<IMathProcessor>().SingleInstance();
+
+            builder.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
+                   .Where(t => t.Name.EndsWith("MathOperation"))
+                   .AsImplementedInterfaces();
+
+            builder.RegisterType<MathProcessor>().As<IMathProcessor>().SingleInstance();
+
+            var container = builder.Build();
+            return container;
         }
     }
 }
