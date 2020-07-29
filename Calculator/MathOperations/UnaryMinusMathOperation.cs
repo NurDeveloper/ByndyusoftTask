@@ -1,19 +1,20 @@
-﻿using System;
+﻿using Calculator.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Calculator.Domain.MathOperations
+namespace Calculator.MathOperations
 {
     /// <summary>
     /// Unary minus operation
     /// </summary>
-    public class UnaryMinusMathOperation : MathOperation
+    public class UnaryMinusMathOperation : IMathOperation
     {
         public const string Keyword = "~";
 
-        public override int Priority => 1;
+        public int Priority => 1;
 
-        public override void Operate(Stack<double> stack)
+        public void Operate(Stack<double> stack)
         {
             if (stack != null && stack.Count() >= 1)
             {

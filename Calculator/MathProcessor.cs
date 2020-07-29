@@ -3,7 +3,6 @@ using Calculator.Interfaces;
 using System.Collections.Generic;
 using Calculator.Domain.ExpressionUnits;
 using System.Globalization;
-using Calculator.Domain.MathOperations;
 using Calculator.Domain.Enums;
 
 namespace Calculator
@@ -45,7 +44,7 @@ namespace Calculator
             return stack.Peek();
         }
 
-        private static MathOperation GetOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
+        private static IMathOperation GetOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
         {
             var operation = mathOperationsContainer.GetOperationOrDefault(item.Keyword);
 

@@ -1,21 +1,21 @@
 ﻿using System.Collections.Generic;
 
-namespace Calculator.Domain.MathOperations
+namespace Calculator.Interfaces
 {
     /// <summary>
-    /// Mathematical operation abstract class
+    /// Mathematical operation interface
     /// </summary>
-    public abstract class MathOperation
+    public interface IMathOperation
     {
         /// <summary>
         /// Priority of math operation
         /// </summary>
-        public abstract int Priority { get; }
+        int Priority { get; }
 
         /// <summary>
         /// Execute operation
         /// </summary>
         /// <param name="stack">Stack of arguments for the operation</param>
-        public abstract void Operate(Stack<double> stack);
+        void Operate(Stack<double> stack);
     }
 }

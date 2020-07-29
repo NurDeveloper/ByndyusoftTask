@@ -1,19 +1,20 @@
-﻿using System;
+﻿using Calculator.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Calculator.Domain.MathOperations
+namespace Calculator.MathOperations
 {
     /// <summary>
     /// Division operation
     /// </summary>
-    public class DivMathOperation : MathOperation
+    public class DivMathOperation : IMathOperation
     {
         public const string Keyword = "/";
 
-        public override int Priority => 2;
+        public int Priority => 2;
 
-        public override void Operate(Stack<double> stack)
+        public void Operate(Stack<double> stack)
         {
             if (stack != null && stack.Count() >= 2)
             {

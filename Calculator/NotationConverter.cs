@@ -1,6 +1,5 @@
 ﻿using Calculator.Domain.Enums;
 using Calculator.Domain.ExpressionUnits;
-using Calculator.Domain.MathOperations;
 using Calculator.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -96,7 +95,7 @@ namespace Calculator
             return result;
         }
 
-        private static MathOperation GetOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
+        private static IMathOperation GetOperationByKeyword(ExpressionUnit item, IMathOperationsContainer mathOperationsContainer)
         {
             var operation = mathOperationsContainer.GetOperationOrDefault(item.Keyword);
 

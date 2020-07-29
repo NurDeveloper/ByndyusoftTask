@@ -1,7 +1,7 @@
 ﻿using Calculator.Domain;
 using Calculator.Domain.Enums;
-using Calculator.Domain.MathOperations;
 using Calculator.Interfaces;
+using Calculator.MathOperations;
 using System.Collections.Generic;
 
 namespace Calculator
@@ -12,11 +12,11 @@ namespace Calculator
     /// </summary>
     public class MathOperationsContainer : IMathOperationsContainer
     {
-        private readonly Dictionary<string, MathOperation> _mathOperations;
+        private readonly Dictionary<string, IMathOperation> _mathOperations;
 
         public MathOperationsContainer()
         {
-            _mathOperations = new Dictionary<string, MathOperation>
+            _mathOperations = new Dictionary<string, IMathOperation>
             {
                 { AddMathOperation.Keyword, new AddMathOperation() },
                 { SubMathOperation.Keyword, new SubMathOperation() },
@@ -41,9 +41,9 @@ namespace Calculator
         /// </summary>
         /// <param name="keyword">Operation keyword</param>
         /// <returns>Returns a reference to the operation by keyword or default instance</returns>
-        public MathOperation GetOperationOrDefault(string keyword)
+        public IMathOperation GetOperationOrDefault(string keyword)
         {
-            _mathOperations.TryGetValue(keyword, out MathOperation mathOperation);
+            _mathOperations.TryGetValue(keyword, out IMathOperation mathOperation);
 
             return mathOperation;
         }
