@@ -1,14 +1,30 @@
 ﻿using Calculator.Domain.ExpressionUnits;
 using Calculator.Interfaces;
+using Calculator.MathOperations;
 using Calculator.Tests.AssertExtensions;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Calculator.Tests
 {
     public class ParserTests
     {
-        private readonly IMathOperationsContainer _mathOperationsContainer = new MathOperationsContainer();
+        private readonly IMathOperationsContainer _mathOperationsContainer;
+
+        public ParserTests()
+        {
+            var mathOperations = new List<IMathOperation>
+            {
+                new AddMathOperation(),
+                new SubMathOperation(),
+                new MulMathOperation(),
+                new DivMathOperation(),
+                new UnaryMinusMathOperation()
+            };
+
+            _mathOperationsContainer = new MathOperationsContainer(mathOperations);
+        }
 
         [Fact]
         public void Parser_should_be()

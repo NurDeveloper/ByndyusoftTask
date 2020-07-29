@@ -1,5 +1,6 @@
 ﻿using Calculator.Domain.ExpressionUnits;
 using Calculator.Interfaces;
+using Calculator.MathOperations;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,16 @@ namespace Calculator.Tests
 
         public MathCalculatorUnitTests()
         {
-            _mathOperationsContainer = new MathOperationsContainer();
+            IEnumerable<IMathOperation> mathOperations = new List<IMathOperation>
+            {
+                new AddMathOperation(),
+                new SubMathOperation(),
+                new MulMathOperation(),
+                new DivMathOperation(),
+                new UnaryMinusMathOperation()
+            };
+
+            _mathOperationsContainer = new MathOperationsContainer(mathOperations);
 
             _mockParser = new Mock<IParser>();
             _mockNotationConverter = new Mock<INotationConverter>();

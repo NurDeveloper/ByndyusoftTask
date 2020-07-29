@@ -14,17 +14,8 @@ namespace Calculator
     {
         private readonly Dictionary<string, IMathOperation> _mathOperations = new Dictionary<string, IMathOperation>();
 
-        public MathOperationsContainer()
+        public MathOperationsContainer(IEnumerable<IMathOperation> mathOperations)
         {
-            IEnumerable<IMathOperation> mathOperations = new List<IMathOperation>
-            {
-                new AddMathOperation(),
-                new SubMathOperation(),
-                new MulMathOperation(),
-                new DivMathOperation(),
-                new UnaryMinusMathOperation()
-            };
-
             foreach (var operation in mathOperations)
             {
                 _mathOperations.Add(operation.Keyword, operation);

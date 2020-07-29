@@ -1,5 +1,6 @@
 ﻿using Calculator.Domain.ExpressionUnits;
 using Calculator.Interfaces;
+using Calculator.MathOperations;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -8,7 +9,21 @@ namespace Calculator.Tests
 {
     public class MathProcessorUnitTests
     {
-        private readonly IMathOperationsContainer _mathOperationsContainer = new MathOperationsContainer();
+        private readonly IMathOperationsContainer _mathOperationsContainer;
+
+        public MathProcessorUnitTests()
+        {
+            var mathOperations = new List<IMathOperation>
+            {
+                new AddMathOperation(),
+                new SubMathOperation(),
+                new MulMathOperation(),
+                new DivMathOperation(),
+                new UnaryMinusMathOperation()
+            };
+
+            _mathOperationsContainer = new MathOperationsContainer(mathOperations);
+        }
 
         [Fact]
         public void MathProcessor_should_be()

@@ -1,5 +1,6 @@
 ﻿using Calculator.Domain.ExpressionUnits;
 using Calculator.Interfaces;
+using Calculator.MathOperations;
 using Calculator.Tests.AssertExtensions;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,21 @@ namespace Calculator.Tests
 {
     public class NotationConverterTests
     {
-        private readonly IMathOperationsContainer _mathOperationsContainer = new MathOperationsContainer();
+        private readonly IMathOperationsContainer _mathOperationsContainer;
+
+        public NotationConverterTests()
+        {
+            var mathOperations = new List<IMathOperation>
+            {
+                new AddMathOperation(),
+                new SubMathOperation(),
+                new MulMathOperation(),
+                new DivMathOperation(),
+                new UnaryMinusMathOperation()
+            };
+
+            _mathOperationsContainer = new MathOperationsContainer(mathOperations);
+        }
 
         [Fact]
         public void NotationConverter_should_be()
