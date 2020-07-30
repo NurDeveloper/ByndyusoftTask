@@ -110,6 +110,24 @@ namespace Calculator.Tests
         }
 
         [Fact]
+        public void Parser_parses_first_operand_in_brackets_and_binary_operation()
+        {
+            var parser = new Parser();
+            string inputValue = "(8+2)*2";
+
+            var result = parser.Parse(inputValue, _mathOperationsContainer);
+
+            Assert.Collection(result,
+                item => AssertExpressionUnit.Equal(new LeftBracketExpressionUnit(), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("8"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("+"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("2"), item),
+                item => AssertExpressionUnit.Equal(new RightBracketExpressionUnit(), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("*"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("2"), item));
+        }
+
+        [Fact]
         public void Parser_parses_digit_and_operation()
         {
             var parser = new Parser();

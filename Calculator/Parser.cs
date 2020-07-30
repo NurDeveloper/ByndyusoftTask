@@ -5,6 +5,7 @@ using Calculator.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace Calculator
@@ -33,7 +34,8 @@ namespace Calculator
                 OperationType operationType = OperationType.Unary;
 
                 var firstOperandExists = numberBuilder.Length != 0;
-                if (firstOperandExists)
+                var firstOperandInBracketsExists = result.Count() != 0 && result.Last().Type == ExpressionUnitType.RightBracket;
+                if (firstOperandExists || firstOperandInBracketsExists)
                 {
                     operationType = OperationType.Binary;
                 }
