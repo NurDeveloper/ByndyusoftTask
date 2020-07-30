@@ -61,6 +61,13 @@ namespace Calculator
 
                 var operation = GetOperationByKeyword(item, mathOperationsContainer);
 
+                if (operation.Type == OperationType.Unary)
+                {
+                    stack.Push(item);
+
+                    continue;
+                }
+
                 while (stack.Count() != 0)
                 {
                     var peek = stack.Peek();
@@ -69,7 +76,9 @@ namespace Calculator
                         break;
                     }
 
-                    if (GetOperationByKeyword(peek, mathOperationsContainer).Priority <= operation.Priority)
+                    var peekOperation = GetOperationByKeyword(peek, mathOperationsContainer);
+
+                    if (peekOperation.Type != OperationType.Unary && peekOperation.Priority <= operation.Priority)
                     {
                         break;
                     }

@@ -157,6 +157,27 @@ namespace Calculator.Tests
         }
 
         [Fact]
+        public void NotationConverter_converts_higher_priority_unary_operation_and_lower_priority_binary_operation_to_RPN()
+        {
+            var notationConverter = new NotationConverter();
+            var inputValue = new List<ExpressionUnit>()
+            {
+                new OperationExpressionUnit("-", "~"),
+                new NumberExpressionUnit("8.00"),
+                new OperationExpressionUnit("+"),
+                new NumberExpressionUnit("2.00"),
+            };
+
+            var result = notationConverter.ConvertToReversePolishNotation(inputValue, _mathOperationsContainer);
+
+            Assert.Collection(result,
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("8.00"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("-", "~"), item),
+                item => AssertExpressionUnit.Equal(new NumberExpressionUnit("2.00"), item),
+                item => AssertExpressionUnit.Equal(new OperationExpressionUnit("+"), item));
+        }
+
+        [Fact]
         public void NotationConverter_throws_custom_exception_for_wrong_brackets()
         {
             var notationConverter = new NotationConverter();
