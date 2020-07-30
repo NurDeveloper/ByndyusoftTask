@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Calculator.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +13,8 @@ namespace Calculator.Domain.MathOperations
         public const string Keyword = "/";
 
         public override int Priority => 2;
+
+        public override OperationType Type => OperationType.Binary;
 
         public override void Operate(Stack<double> stack)
         {

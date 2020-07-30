@@ -95,6 +95,8 @@ namespace Calculator.Tests
             mathOperation.Operate(stack);
 
             Assert.Equal(1, mathOperation.Priority);
+            Assert.Equal(OperationType.Binary, mathOperation.Type);
+
             Assert.Equal(5.00, stack.Peek());
         }
 
@@ -114,6 +116,8 @@ namespace Calculator.Tests
             mathOperation.Operate(stack);
 
             Assert.Equal(1, mathOperation.Priority);
+            Assert.Equal(OperationType.Binary, mathOperation.Type);
+
             Assert.Equal(2.00, stack.Peek());
         }
 
@@ -133,6 +137,8 @@ namespace Calculator.Tests
             mathOperation.Operate(stack);
 
             Assert.Equal(2, mathOperation.Priority);
+            Assert.Equal(OperationType.Binary, mathOperation.Type);
+
             Assert.Equal(25.00, stack.Peek());
         }
 
@@ -152,6 +158,8 @@ namespace Calculator.Tests
             mathOperation.Operate(stack);
 
             Assert.Equal(2, mathOperation.Priority);
+            Assert.Equal(OperationType.Binary, mathOperation.Type);
+
             Assert.Equal(2.00, stack.Peek());
         }
 
@@ -170,6 +178,8 @@ namespace Calculator.Tests
             mathOperation.Operate(stack);
 
             Assert.Equal(1, mathOperation.Priority);
+            Assert.Equal(OperationType.Unary, mathOperation.Type);
+
             Assert.Equal(-8.00, stack.Peek());
         }
 

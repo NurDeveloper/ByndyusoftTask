@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Calculator.Domain.Enums;
 
 namespace Calculator.Domain.MathOperations
 {
@@ -12,6 +13,8 @@ namespace Calculator.Domain.MathOperations
         public const string Keyword = "+";
 
         public override int Priority => 1;
+
+        public override OperationType Type => OperationType.Binary;
 
         public override void Operate(Stack<double> stack)
         {

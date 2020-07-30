@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Calculator.Domain.Enums;
+using System.Collections.Generic;
 
 namespace Calculator.Domain.MathOperations
 {
@@ -11,6 +12,11 @@ namespace Calculator.Domain.MathOperations
         /// Priority of math operation
         /// </summary>
         public abstract int Priority { get; }
+
+        /// <summary>
+        /// Type of math operation
+        /// </summary>
+        public abstract OperationType Type { get; }
 
         /// <summary>
         /// Execute operation
